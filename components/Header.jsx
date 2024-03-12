@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { IoMdLogIn } from "react-icons/io";
+import { IoMdPerson } from "react-icons/io";
 
 export default function Header() {
   return (
@@ -15,8 +15,8 @@ export default function Header() {
         </div>
         <div>
           <li>
-            <Link href={"/login"} className="py-2 px-5 flex items-center text-yellow-400">
-              <IoMdLogIn className="mr-2"/> Log in
+            <Link href={"/signin"} className="py-2 px-5 flex items-center font-600 text-yellow-400">
+              <IoMdPerson className="mr-2"/> Sign In
             </Link>
           </li>
         </div>
