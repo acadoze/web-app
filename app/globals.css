@@ -6,6 +6,7 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --primary-color: #312213;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,18 +17,34 @@
   }
 }
 
+li {
+  list-style: none;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: "Raleway", sans-serif;
+
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+.nav li a {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  color: #000;
+}
+.site_footer h6 {
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+}
+.site_footer li {
+  margin-bottom: 2px;
+
 }
