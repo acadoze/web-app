@@ -48,3 +48,19 @@ body {
   margin-bottom: 2px;
 
 }
+.site_form {
+  width: 300px;
+  margin-top: 3rem;
+}
+.site_form li {
+  margin-bottom: 35px;
+  display: flex;
+  flex-direction: column;
+}
+.site_form input {
+  background: transparent;
+  padding: 8px 0;
+  border: 0;
+  border-bottom: 1px solid #919191;
+  outline: none;
+}
