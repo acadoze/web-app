@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function() {
+export default function Footer() {
   return (
     <footer className="bg-[#c8c5c1] site_footer py-[2.5rem]">
       <div className="flex justify-evenly">

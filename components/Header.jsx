@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { IoMdLogIn } from "react-icons/io";
 
-export default function() {
+export default function Header() {
   return (
     <header className="flex justify-between h-[100px] py-3 px-3">
       <div className="">
