@@ -12,7 +12,7 @@ export default function Footer() {
         </div>
         <div>
           <h6> Subscribe for News and Updates</h6>
-          <li className=" mb-[10px]">Enter your email here *</li>
+          <li className=" mb-[15px]">Enter your email here *</li>
           <li>
             <input className="px-3 py-4 mr-2 border-1 border-[#312213] w-[250px] rounded-sm" />
             <button className="bg-[#bada55] py-[10px] px-[20px] text-white rounded-[100px]">Send</button>
