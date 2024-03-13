@@ -5,7 +5,7 @@ export default function Header() {
   return (
     <header className="flex justify-between h-[100px] py-3 px-3">
       <div className="">
-        <img src="/logo.png" clasName="object-cover" />
+        <img src="/logo.png" className="object-cover" />
       </div>
       <div className="flex items-center">
         <div className="flex gap-x-5 mr-5">
