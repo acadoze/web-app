@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="">
+    <main>
       <head>
         <title>Home | Acadoze</title>
       </head>
