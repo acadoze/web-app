@@ -16,14 +16,23 @@ export default function Home() {
           <div className=" relative h-[700px] w-[inherit]">
             <div className="bg-lightCyan rounded-[50px] h-[250px] shadow-2xl mb-[35px]"></div>
 
-            <div className={`${orbitron.className} bg-gradient-to-r from-[#fff4fe] to-[#f4fcff] px-[1.6rem] py-[3rem] bg-[white] rounded-[50px] h-[260px] left-[10%] top-[21%] w-[630px] shadow-2xl absolute`}>
+            <div className={`${orbitron.className} flex bg-gradient-to-r from-[#fff4fe] to-[#f4fcff] px-[1.6rem] py-[3rem] bg-[white] rounded-[50px] h-[260px] left-[10%] top-[21%] w-[630px] shadow-2xl absolute`}>
+
               <div className="w-[180px]">
 
                 <h1 className="tracking-[1px] uppercase text-[1.7rem] font-[900]"> unlock <span className={`block text-[1.1rem] font-[600] ${poppins.className} `}>the potential</span> </h1>
                 <p className={`${poppins.className} my-3 text-[.8rem] flex items-center text-lightCyan`}>  <FaRegPlayCircle />&nbsp; Watch The Video </p>
                 <p className={`${poppins.className} text-[.8rem]`}> Discover a new world of unexpected gaming and entertainment experience</p>
               </div>
-                
+              
+              <div className="flex flex-col absolute left-[210px] top-0">
+                <img src="/duo/br-circle.png" className="w-[280px] h-[280px] relative bottom-[80px]" />
+                <div className="flex absolute w-[300px]">
+                  <img src="/duo/girl.png" className="h-[270px] w-[auto] absolute top-[-10px] left-[21px]" />
+                  <img src="/duo/machine.png" className="h-[120px] w-[auto] left-[104px] top-[-28px] absolute"/>
+                  <img src="/duo/boy.png" className="h-[270px] w-[auto] absolute top-[-10px] left-[85px]" />
+                </div>
+              </div>
 
             </div>
 
