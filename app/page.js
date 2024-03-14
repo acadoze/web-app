@@ -1,33 +1,38 @@
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import Link from "next/link";
+import { FaRegPlayCircle } from "react-icons/fa";
+
+import { Orbitron, Poppins } from "next/font/google";
+const orbitron = Orbitron({ subsets: ["latin"] });
+const poppins = Poppins({ subsets: ["latin"], weight: ["200", "400", "500", "600", "700", "800", "900"]});
 
 export default function Home() {
   return (
     <main>
-      <head>
-        <title>Home | Acadoze</title>
-      </head>
       <Header />
-      <section className="flex bg-gradient-to-r from-[#a6debd] to-[#f7c6b5] px-[7rem] gap-x-[7rem] py-[3rem]">
-        <div className="w-[300px]">
-          <img 
-            src="/teach.webp"
-            className="object-cover" 
-            style={{
-              width: 'inherit',
-              height: 'inherit',
-            }}
-          />
-        </div>
-        <div className="flex-1 flex flex-col items-center mt-3">
-          <h1 className="text-[3.5rem] font-[700] bg-[#a3debd] text-[#312213] py-[.5rem] px-[2rem] rounded-[100px] mb-5">ACADOZE</h1>
-          <h2 className="text-[1.55rem] text-[#312213] font-semibold mb-3">Your dose of integrated STEM in any subject classroom.</h2>
-          <p className="text-[#000] text-[1.15rem] tracking-[.5px] leading-[2rem] mb-3 text-center">Lesson integration projects and content bringing creativity and problem solving skills into any classroom to grow future thinking learners. From video instruction with real life examples to AI tutors to answer questions and clarify concepts. Acadoze keeps you going with an ever-evolving classroom. </p>
-          <Link href="/register" className="font-semibold rounded-[100px] text-[#312213] text-[1rem] py-2 px-5 bg-[#bada55]">Start your free trial</Link>
+      <section className="bg-blue py-[2rem]">
+        <div className="flex flex-col items-center w-[780px] mx-[auto]">
+          <div className=" relative h-[700px] w-[inherit]">
+            <div className="bg-lightCyan rounded-[50px] h-[250px] shadow-2xl mb-[35px]"></div>
+
+            <div className={`${orbitron.className} bg-gradient-to-r from-[#fff4fe] to-[#f4fcff] px-[1.6rem] py-[3rem] bg-[white] rounded-[50px] h-[260px] left-[10%] top-[21%] w-[630px] shadow-2xl absolute`}>
+              <div className="w-[180px]">
+
+                <h1 className="tracking-[1px] uppercase text-[1.7rem] font-[900]"> unlock <span className={`block text-[1.1rem] font-[600] ${poppins.className} `}>the potential</span> </h1>
+                <p className={`${poppins.className} my-3 text-[.8rem] flex items-center text-lightCyan`}>  <FaRegPlayCircle />&nbsp; Watch The Video </p>
+                <p className={`${poppins.className} text-[.8rem]`}> Discover a new world of unexpected gaming and entertainment experience</p>
+              </div>
+                
+
+            </div>
+
+            <div className="bg-electricPurple rounded-[50px] h-[250px] w-[780px] shadow-2xl "></div>
+          </div>
         </div>
       </section>
       <Footer />
     </main>
   );
 }
+
