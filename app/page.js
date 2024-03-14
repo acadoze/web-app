@@ -2,6 +2,9 @@ import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import Link from "next/link";
 import { FaRegPlayCircle } from "react-icons/fa";
+import { FaFacebookF, FaLinkedinIn  } from "react-icons/fa6";
+import { BsInstagram } from "react-icons/bs";
+import { IoLogoTwitter } from "react-icons/io";
 
 import { Orbitron, Poppins, Outfit } from "next/font/google";
 const orbitron = Orbitron({ subsets: ["latin"] });
@@ -55,8 +58,8 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="x_spacing relative">
-            <div className="bg-lightCyan rounded-[50px] z-[1] top-[141px] h-[200px] left-[-80px] absolute w-[inherit] shadow-2xl mb-[35px]"></div>
+        <section className="x_spacing relative flex flex-col items-center">
+            <div className="bg-lightCyan rounded-[50px] z-[1] top-[141px] h-[200px] left-[0] absolute w-[inherit] shadow-2xl mb-[35px]"></div>
 
             <div className={`${orbitron.className} z-[3] flex bg-gradient-to-r from-[#fff4fe] to-[#f4fcff] px-[1.6rem] py-[3rem] bg-[white] rounded-[50px] h-[260px] relative mb-5 w-[630px] shadow-2xl`}>
 
@@ -94,6 +97,38 @@ export default function Home() {
 
             </div>
 
+        </section>
+
+        <section className={`flex ${outfit.className} px-5 justify-between h-[200px] px-[2.5rem] py-[1rem] text-[white] x_spacing bg-[#659bd5] rounded-2xl mt-[5rem]`}>
+          <div>
+            <h3 className="mb-[10px] text-[1.3rem]"> Questions? </h3>
+            <p className="text-[.9rem]">Let us demonstrate everything to you.  We also offer:</p>
+            <ul className="pl-3 text-[.9rem]">
+              <li className="mt-3">Have 14 days free trial to test</li>
+              <li>A super supportive team</li>
+            </ul>
+            <div className="flex mt-[1.5rem] gap-x-[20px]">
+              <FaFacebookF />
+              <BsInstagram />
+              <IoLogoTwitter />
+              <FaLinkedinIn />
+            </div>
+          </div>
+
+          <div className="flex items-center">
+            <Link href="/contact" className="uppercase text-[1rem] py-1 px-2 bg-[#00c2ff] rounded-2xl h"> Let's talk </Link>
+            <img src="/31.png" className="w-[auto] h-[190px]" />
+          </div>
+        </section>
+
+        <section className="x_spacing my-[4rem]">
+          <h3 className={`uppercase text-[1.3rem] text-[white] ${poppins.className} `}> partners </h3>
+          <div className="rounded-2xl bg-[#659bd5] h-[100px] flex justify-evenly items-center partners">
+            <img src="/convai.png" className="" />
+            <img src="/nvidia.png" className="" />
+            <img src="/soonami.png" className="" />
+            <img src="/foundance.png" className=""  />
+          </div>
         </section>
       </section>
       <Footer />
