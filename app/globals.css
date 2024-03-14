@@ -19,7 +19,11 @@
   }
 }
 .Toastify__toast-body { font-family: 'system-ui'; }
-
+.x_spacing {
+  width: 780px;
+  margin-left: auto;
+  margin-right: auto;
+}
 li {
   list-style: none;
 }
