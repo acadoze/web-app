@@ -5,20 +5,13 @@ import {useState, useEffect} from 'react'
 import axios from "axios"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ThreeCircles } from 'react-loader-spinner'
 
 export default function Signup() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [fullName, setFullName] = useState("")
-  const [buttonDisabled, disableButton] = useState(true)
-
-  useEffect(() => {
-    if (email === "" || password === "" || fullName === "") {
-      disableButton(true)
-    } else {
-      disableButton(false)
-    }
-  }, [email, password, fullName])
+  const [showLoader, setLoader] = useState(false)
 
   function handleForm(e) {
     e.preventDefault()
@@ -26,13 +19,16 @@ export default function Signup() {
       toast.warn("Your Full Name, Email and Password field must not be empty")
       return false
     }
-    disableButton(true)
+    setLoader(true)
     axios.post(`${process.env.API_BASE}/api/auth`, {fullName, email, password, role: "student"})
-    .then(async ({data}) => {
-      disableButton(false)
-      if (!data.success) {
-        toast(data.message);
-      }
+    .then(async (response) => {
+      const {data} = response
+      toast.info(data.message);
+      setLoader(false)
+    })
+    .catch(err => {
+      toast.error(err.data.message)
+      setLoader(false)
     })
   }
   return (
@@ -58,10 +54,22 @@ export default function Signup() {
           </li>
           <li>
             <button 
-              className="text-white bg-yellow-400 px-[10px] py-[10px]" 
-              disabled={buttonDisabled}
+              className="text-white flex justify-center items-center bg-yellow-400 px-[10px] py-[10px]" 
             > 
-              Sign Up 
+              Sign Up &nbsp;&nbsp;
+              {
+                showLoader ? 
+                <ThreeCircles
+                  visible={true}
+                  height="20"
+                  width="20"
+                  color="#fff"
+                  radius="9"
+                  ariaLabel="loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                /> : <></>
+              }
             </button>
           </li>
         </form>

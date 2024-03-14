@@ -5,19 +5,12 @@ import {useState, useEffect} from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios"
+import { ThreeCircles } from 'react-loader-spinner'
 
 export default function Signin() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [buttonDisabled, disableButton] = useState(true)
-
-  useEffect(() => {
-    if (email === "" || password === "" || fullName === "") {
-      disableButton(true)
-    } else {
-      disableButton(false)
-    }
-  }, [email, password, fullName])
+  const [showLoader, setLoader] = useState(false)
 
   function handleForm(e) {
     e.preventDefault()
@@ -25,14 +18,16 @@ export default function Signin() {
       toast.warn("Email or password must not be empty")
       return false
     }
-    disableButton(true)
+    setLoader(true)
     axios.put(`${process.env.API_BASE}/api/auth`, {email, password})
-    .then(async ({data}) => {
-      if (!data.success) {
-        toast(data.message);
-      }
-      disableButton(false)
-    
+    .then(async (response) => {
+      const {data} = response
+      toast.info(data.message);
+      setLoader(false)
+    })
+    .catch(err => {
+      toast.error(err.data.message)
+      setLoader(false)
     })
   }
 
@@ -56,10 +51,23 @@ export default function Signin() {
           <li>
             <button 
               type="submit"
-              className="text-white bg-yellow-400 px-[10px] py-[10px]" 
-              disabled={buttonDisabled}
+              className="text-white bg-yellow-400 flex justify-center items-center px-[10px] py-[10px]" 
             > 
-              Sign In
+              Sign In &nbsp;&nbsp;
+              {
+                showLoader ? 
+                <ThreeCircles
+                  visible={true}
+                  height="20"
+                  width="20"
+                  color="#fff"
+                  radius="9"
+                  ariaLabel="loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                /> : <></>
+              }
+              
             </button>
           </li>
         </form>
