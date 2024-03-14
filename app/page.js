@@ -116,7 +116,7 @@ export default function Home() {
           </div>
 
           <div className="flex items-center">
-            <Link href="/contact" className="uppercase text-[1rem] py-1 px-2 bg-[#00c2ff] rounded-2xl h"> Let's talk </Link>
+            <Link href="/contact" className="uppercase text-[1rem] py-1 px-2 bg-[#00c2ff] rounded-2xl h"> Let&apos;s talk </Link>
             <img src="/31.png" className="w-[auto] h-[190px]" />
           </div>
         </section>
