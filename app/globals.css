@@ -24,6 +24,10 @@
   margin-left: auto;
   margin-right: auto;
 }
+.partners img {
+  width: auto;
+  height: 30px;
+}
 li {
   list-style: none;
 }
@@ -54,13 +58,14 @@ body {
 }
 .site_footer h6 {
   color: #fff;
-  font-weight: 600;
-  font-size: 1.3rem;
+  font-weight: 500;
+  font-size: 1.4rem;
   margin-bottom: 15px;
   font-size: .95rem;
 }
-.site_footer li {
+.site_footer li a {
   color: #fff;
+  font-size: .85rem;
 }
 .site_footer li {
   margin-bottom: 2px;
