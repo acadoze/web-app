@@ -114,3 +114,25 @@ body {
   right: var(--spx_wrap_img_spx);
 }
 
+.topics > a:hover > div {
+  background: transparent;
+}
+.topics > a > div {
+  background: #00000082;
+  transition: .5s ease all;
+}
+
+
+.topics a, .topics div {
+  border: 5px solid #11c6ff;
+  width: 180px;
+  height: 180px;
+  border-radius: 400px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.topics img {
+  width: auto;
+}

@@ -51,7 +51,7 @@ export default function Home() {
             <p className="mb-[30px]">Open the door and lets discover!</p>
             <div>
               <Link href="signup" className="uppercase py-2 px-3 bg-[#659bd5] rounded-2xl mr-3">start your free trial</Link>
-              <Link href="signup" className="uppercase py-2 px-3 border-2 border-[#0888d7] rounded-2xl">log in</Link>
+              <Link href="signin" className="uppercase py-2 px-3 border-2 border-[#0888d7] rounded-2xl">log in</Link>
             </div>
           </div>
           <div className="relative bottom-[70px]">
