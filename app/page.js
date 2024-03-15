@@ -18,29 +18,30 @@ export default function Home() {
       <section className="bg-blue py-[2rem]">
         <div className="flex flex-col items-center w-[780px] mx-[auto]">
           <div className=" relative h-[700px] w-[inherit]">
-            <div className="bg-lightCyan rounded-[50px] h-[280px] shadow-2xl mb-[35px]"></div>
+            {/*<div className="bg-lightCyan rounded-[50px] h-[280px] shadow-2xl mb-[35px]"></div>*/}
+            <img src="/top.png" className="z-[1]" />
 
-            <div className={`${orbitron.className} flex bg-gradient-to-r from-[#fff4fe] to-[#f4fcff] px-[1.6rem] py-[3rem] bg-[white] rounded-[50px] h-[260px] left-[10%] top-[220px] w-[630px] shadow-2xl absolute`}>
+            <div className={`${orbitron.className} z-[3] flex bg-gradient-to-r from-[#fff4fe] to-[#f4fcff] px-[1.6rem] py-[3rem] bg-[white] rounded-[50px] h-[260px] left-[10%] top-[220px] w-[630px] shadow-2xl absolute`}>
 
               <div className="w-[180px]">
 
-                <h1 className="tracking-[1px] uppercase text-[1.7rem] font-[900]"> unlock <span className={`block text-[1.1rem] font-[600] ${poppins.className} `}>the potential</span> </h1>
+                <h1 className="tracking-[1px] uppercase text-[1.5rem] font-[900]"> unlock <span className={`block text-[.8rem] font-[600] ${poppins.className} `}>the potential</span> </h1>
                 <p className={`${poppins.className} my-3 text-[.8rem] flex items-center text-lightCyan`}>  <FaRegPlayCircle />&nbsp; Watch The Video </p>
-                <p className={`${poppins.className} text-[.8rem]`}> Discover a new world of unexpected gaming and entertainment experience</p>
+                <p className={`${poppins.className} text-[.75rem]`}> Discover a new world of unexpected gaming and entertainment experience</p>
               </div>
               
-              <div className="flex flex-col absolute left-[210px] top-0">
-                <img src="/duo/br-circle.png" className="w-[280px] h-[280px] relative bottom-[80px]" />
+              <div className="flex flex-col absolute left-[185px] top-[35px]">
+                <img src="/duo/br-circle.png" className="w-[250px] h-[250px] relative bottom-[80px]" />
                 <div className="flex absolute w-[300px]">
-                  <img src="/duo/girl.png" className="h-[270px] w-[auto] absolute top-[-10px] left-[21px]" />
+                  <img src="/duo/girl.png" className="h-[235px] w-[auto] absolute top-[-10px] left-[21px]" />
                   <img src="/duo/machine.png" className="h-[120px] w-[auto] left-[104px] top-[-28px] absolute"/>
-                  <img src="/duo/boy.png" className="h-[270px] w-[auto] absolute top-[-10px] left-[85px]" />
+                  <img src="/duo/boy.png" className="h-[235px] w-[auto] absolute top-[-10px] left-[85px]" />
                 </div>
               </div>
 
             </div>
 
-            <div className="bg-electricPurple rounded-[50px] h-[230px] w-[780px] shadow-2xl "></div>
+            <div className="bg-electricPurple rounded-[50px] relative top-[-134px] z-[1] h-[230px] w-[780px] shadow-2xl "></div>
           </div>
         </div>
 

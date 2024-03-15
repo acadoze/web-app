@@ -10,6 +10,7 @@ const config: Config = {
     colors: {
       blue: "#002395",
       lightCyan: "#68dbff",
+      darkCyan: "#00c2ff",
       electricPurple: "#8e37ff",
       lightSlateBlue: "#7c73fc"
     },

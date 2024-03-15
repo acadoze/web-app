@@ -8,6 +8,7 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
   --primary-color: #312213;
+  --spx_wrap_img_spx: 0;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -95,9 +96,21 @@ body {
   outline: none;
 }
 
+.spx_wrap .imgs {
+  position: absolute;
+  width: auto;
+  height: 260px;
+}
 
 .poppins-light {
   font-family: "Poppins", sans-serif;
   font-weight: 300;
   font-style: normal;
 }
+.spx_wrap .imgs:first-child {
+  left: var(--spx_wrap_img_spx);
+}
+.spx_wrap .imgs:last-of-type {
+  right: var(--spx_wrap_img_spx);
+}
+

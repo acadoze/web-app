@@ -6,6 +6,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios"
 import { ThreeCircles } from 'react-loader-spinner'
+import { Orbitron, Poppins, Outfit } from "next/font/google";
+const outfit = Outfit({ subsets: ["latin"] });
 
 export default function Signin() {
   const [email, setEmail] = useState("")
@@ -32,48 +34,23 @@ export default function Signin() {
   }
 
   return (
-    <main className="relative bg-[#eaf2ff] h-[100vh] w-[100vw]">
-      <Link href="/" className="absolute top-[30px] text-[1.8rem] right-[80px]">
-        <LiaTimesSolid />
-      </Link>
-      <section className="flex flex-col justify-center items-center pt-[1rem]">
-        <h1 className="text-[2.3rem] font-semibold">Sign In</h1>
-        <p className="text-[1.2rem]">Not a member? <Link href="/signup" className="text-yellow-400 font-600">Sign Up</Link></p>
-        <form className="site_form" onSubmit={handleForm}>
-          <li>
-            <label htmlFor="email"> Email </label>
-            <input type="email" id="email" className="" value={email} onChange={e => setEmail(e.target.value)} />
-          </li>
-          <li>
-            <label htmlFor="password"> Password </label>
-            <input type="password" id="password" className="" value={password} onChange={e => setPassword(e.target.value)} />
-          </li>
-          <li>
-            <button 
-              type="submit"
-              className="text-white bg-yellow-400 flex justify-center items-center px-[10px] py-[10px]" 
-            > 
-              Sign In &nbsp;&nbsp;
-              {
-                showLoader ? 
-                <ThreeCircles
-                  visible={true}
-                  height="20"
-                  width="20"
-                  color="#fff"
-                  radius="9"
-                  ariaLabel="loading"
-                  wrapperStyle={{}}
-                  wrapperClass=""
-                /> : <></>
-              }
-              
-            </button>
-          </li>
-        </form>
+    <main className={`${outfit.className} relative bg-blue h-[100vh] w-[100vw]`}>
+      <section className="flex flex-col justify-center items-center">
+        <div className="flex justify-center items-center flex-col z-[1]">
+          <img src="/top (2).png" className="w-[auto] h-[350px]" />
+          <img src="/ACADOZE__3_-removebg-preview 1.png" className="w-[auto] h-[70px] absolute top-[73px]" />
+        </div>
+        <div className="bg-[white] z-[2] relative bottom-[202px] w-[400px] spx_wrap shadow-lg h-[150px] w-[500px] h-[170px] rounded-[30px] flex justify-center items-center px-[3rem] ">
+          <img src="/47.png" className="imgs " />
+          <img src="/8.png" className="imgs " />
+          <div className="w-[80%] flex justify-between items-center">
+            <Link className="block uppercase bg-darkCyan px-2 text-[white] text-[.8rem] py-2 rounded-2xl" href="/signin">Students login</Link>
+            <Link className="block uppercase bg-darkCyan px-2 text-[white] text-[.8rem] py-2 rounded-2xl" href="/signup">teachers/<br />parents login</Link>
+          </div>
+        </div>
+        <img src="/bottom (1).png" className="absolute w-[auto] h-[200px] top-[250px] z-[1]" />
       </section>
-              <ToastContainer   />
-
+      <ToastContainer   />
     </main>
   )
 }
