@@ -19,12 +19,14 @@ export default function Home() {
     {
       title: "History",
       img: "/Mask group (1).png",
-      link: "/learn/1/1"
+      link: "/learn/1/1",
+      id: 1
     },
     {
       title: "Science",
       img: "/Mask group (2).png",
-      link: "/learn/1/1"
+      link: "/learn/1/1",
+      id: 2
     }
   ])
 
@@ -66,7 +68,7 @@ export default function Home() {
             {
               topics.map(topic => {
                 return (
-                  <Link className="relative" href={topic.link}>
+                  <Link className="relative" key={topic.id} href={topic.link}>
                     <img src={topic.img} className="z-[1]" />
                     <div className="z-[2] h-[inherit] w-[inherit] absolute" />
                     <h3 className="absolute top-[60px] z-[3] text-[1.8rem] font-[500]"> {topic.title} </h3>
