@@ -2,7 +2,6 @@
 import StudentHeader from "@/components/StudentHeader"
 import {useState, useEffect} from 'react'
 import Experience from "@/components/Player/Experience"
-import {useConvaiClient} from "../../hooks/useConvaiClient"
 
 import { Outfit } from "next/font/google";
 const outfit = Outfit({ subsets: ["latin"] });
