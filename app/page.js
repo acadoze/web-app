@@ -46,7 +46,7 @@ export default function Home() {
         </div>
 
         <section className="flex text-[white] x_spacing justify-center">
-          <div className={`w-[300px] ${outfit.className}`}>
+          <div className={` ${outfit.className}`}>
             <h2 className="text-[1.8rem] capitalise spacing-[10px] font-[600]">No More<br /> Boring<br /> Classroom!</h2>
             <p className="mb-[30px]">Open the door and lets discover!</p>
             <div>
