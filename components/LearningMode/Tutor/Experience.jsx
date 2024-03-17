@@ -26,8 +26,8 @@ export default function Experience({client}) {
           intensity={2}
           castShadow
         />
-        <Teacher teacher="Becky" position={[-1, -1.3, -3]} scale={1.2} rotation-y={degToRad(20)} client={client} />
-        <Gltf src="/models/japanese_classroom.glb" position={[-1, -.1, 4]} />
+        <Teacher teacher="Becky" position={[-5, -1, -3]} scale={1.6} rotation-x={degToRad(0)} rotation-y={degToRad(50)} client={client} />
+        <Gltf src="/models/hexagon_pyramid.glb" position={[-2, -1.2, -5]} />
       </Canvas>
     </>
   )
