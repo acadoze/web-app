@@ -136,3 +136,11 @@ body {
 .topics img {
   width: auto;
 }
+
+.mode_btn {
+  border: 1px solid #33c9f7;
+  transition: .6s ease all;
+}
+.active_l.mode_btn {
+  background-color: #ddf7ff;
+}
