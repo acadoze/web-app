@@ -7,17 +7,14 @@ import Experience from "@/components/LearningMode/Tutor/Experience"
 import Read from "@/components/LearningMode/Read"
 
 import { Outfit } from "next/font/google";
-import { useStore } from "../../hooks/useStore";
 const outfit = Outfit({ subsets: ["latin"] });
 
 export default function Home() {
-  const learningMode = useStore(state => state.learningMode)
-  const setLearningMode = useStore(state => state.setLearningMode)
   const [studentName, setName] = useState("Alex");
+  const [learningMode, setLearningMode] = useState("watch")
 
   useEffect(() => {
-    console.log(learningMode)
-  }, [learningMode])
+  }, [])
 
   return (
     <main className="">
@@ -29,18 +26,21 @@ export default function Home() {
         </div>
 
         <div className="w-[650px] h-[400px] mx-[auto] bg-[white] rounded-2xl relative">
-          <div className="w-[inherit] h-[340px] mx-[auto] bg-[white] shadow-2xl rounded-[inherit]">
-            {
-              learningMode === "watch" ?
-                <Watch />
-              : learningMode === "assessment" ?
-                <Assessment />
-              : learningMode === "tutor" ?
-                <Experience />
-              : <Read />
-            }
-          </div>
+          {
+            <div className="w-[inherit] h-[340px] mx-[auto] bg-[white] shadow-2xl rounded-[inherit]">
+              {
+                learningMode === "watch" ?
+                  <Watch />
+                : learningMode === "assessment" ?
+                  <Assessment />
+                : learningMode === "tutor" ?
+                  <Experience />
+                : <Read />
+              }
+            </div>
+          }
           <div className="absolute bottom-[-17px] z-[4] w-[100%] flex justify-center gap-x-[10px]">
+            
             {
               ["watch", "tutor", "read", "assessment"].map((mode, i) => {
                 return (
