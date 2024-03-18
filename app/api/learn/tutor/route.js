@@ -13,7 +13,12 @@ export async function GET(req) {
 	speechconfig.speechSynthesisVoiceName = `de-DE-${teacher}Neural` // German voice
 
 	const speechSynthesizer = new speechSDK.SpeechSynthesizer(speechconfig)
-	const topic = req.nextUrl.searchParams.get("topic") || "History" // Female
+	const visemes = []
+	speechSynthesizer.visemeReceived = function (s, e) {
+		visemes.push([e.audioOffset / 10000 , e.visemeId])
+	}
+
+	const topic = req.nextUrl.searchParams.get("topic") || "History"
 
 	const audioStream = await new Promise((resolve, reject) => {
 		speechSynthesizer.speakTextAsync(
@@ -36,7 +41,8 @@ export async function GET(req) {
 	return new Response(audioStream, {
 		headers: {
 			"Content-Type": "audio/mpeg",
-			"Content-Dsiposition": `inline; filename=tts.mp3`
+			"Content-Dsiposition": `inline; filename=tts.mp3`,
+			"visems": JSON.stringify(visemes)
 		}
 	})
 }
