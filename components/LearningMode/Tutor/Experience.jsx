@@ -1,13 +1,19 @@
 import {Canvas} from "@react-three/fiber"
 import {Box, Gltf, OrbitControls, Environment, CameraControls} from "@react-three/drei"
 import Teacher from "./Teacher"
+import { useEffect, useState } from "react"
+import PlayerLoader from "@/components/PlayerLoader"
 
 export default function Experience({client}) {
-  function degToRad(degrees) {
-    return degrees * Math.PI / 180
-  }
+  const [showLoader, setLoader] = useState(true)
+  
+  useEffect(() => {
+  }, [])
+  
   return (
-    <>
+    showLoader ? 
+      <PlayerLoader /> 
+    :
       <Canvas camera={{
         position: [0, 0, 0.0001]
       }}>
@@ -29,7 +35,6 @@ export default function Experience({client}) {
         <Teacher teacher="Becky" position={[-5, -1, -3]} scale={1.6} rotation-x={degToRad(0)} rotation-y={degToRad(50)} client={client} />
         <Gltf src="/models/hexagon_pyramid.glb" position={[-2, -1.2, -5]} />
       </Canvas>
-    </>
   )
 }
 
@@ -50,4 +55,8 @@ function CameraManager() {
       }}
     />
   )
+}
+
+function degToRad(degrees) {
+  return degrees * Math.PI / 180
 }
