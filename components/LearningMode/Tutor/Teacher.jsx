@@ -10,7 +10,9 @@ const ANIMATION_FADE_TIME = 0.5;
 
 export default function Teacher({teacher, ...props}) {
 	const {scene} = useGLTF(`/models/Teacher_Nanami.glb`)
+
   const chatPlayerObject = useStore(state => state.chatPlayerObject);
+  const loadingTopicContent = useStore(state => state.loadingTopicContent);
 	const [blink, setBlink] = useState(false)
 	  const group = useRef();
 
@@ -41,6 +43,16 @@ export default function Teacher({teacher, ...props}) {
     nextBlink();
     return () => clearTimeout(blinkTimeout);
   }, []);
+	 useEffect(() => {
+	    if (loadingTopicContent) {
+	      setAnimation("Thinking");
+	    } else if (chatPlayerObject) {
+	      setAnimation(randInt(0, 1) ? "Talking" : "Talking2");
+	    } else {
+	      setAnimation("Idle");
+	    }
+	 }, [chatPlayerObject, loadingTopicContent]);
+
 
 	useEffect(() => {
     actions[animation]
