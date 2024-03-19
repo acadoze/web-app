@@ -18,7 +18,6 @@ export async function GET(req, {params}) {
     }, {status: 400})
   }
   const knowledgeContent = fs.readFileSync(`knowledge/${topic}.txt`, 'utf8');
-  console.log(knowledgeContent)
 
   const speechconfig = speechSDK.SpeechConfig.fromSubscription(
     process.env["AZURE_SPEECH_KEY"],
@@ -33,8 +32,6 @@ export async function GET(req, {params}) {
   speechSynthesizer.visemeReceived = function (s, e) {
     visemes.push([e.audioOffset / 10000 , e.visemeId])
   }
-
-  console.log("---- CHAT PROCESSING ----- ")
 
   const completion = await openai.chat.completions.create({
     model: "gpt-3.5-turbo-1106",
@@ -55,14 +52,12 @@ export async function GET(req, {params}) {
   });
 
   const chatAnswer = completion.choices[0].message.content
-  console.log("---- OPENAI PROCESSED ----- ", chatAnswer)
  
   const audioStream = await new Promise((resolve, reject) => {
     speechSynthesizer.speakTextAsync(
       chatAnswer,
       result => {
         const {audioData} = result
-        console.log("---- AUDIO PROCESSED ---- ")
         speechSynthesizer.close()
         const bufferStream = new PassThrough()
         bufferStream.end(Buffer.from(audioData))
@@ -75,7 +70,6 @@ export async function GET(req, {params}) {
       }
     )
   })
-  console.log("---- CHAT PROCESSING ENDED ----- ")
 
   return new Response(audioStream, {
     headers: {
