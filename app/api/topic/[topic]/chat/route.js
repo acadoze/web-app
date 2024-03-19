@@ -2,28 +2,30 @@ import { NextResponse } from "next/server";
 import OpenAI from "openai"
 import * as speechSDK from "microsoft-cognitiveservices-speech-sdk"
 import { PassThrough } from 'stream'
+import fs from "fs"
 
-const topicContents = [
-  {
-    topic: "history",
-    textContent: "History of the antedeluvian times"
-  }
-]
 const config = {
   apiKey: process.env["OPENAI_KEY"]
 }
 const openai = new OpenAI(config)
 
 export async function GET(req, {params}) {
+  const {topic} = params
+
+  if (!["history"].includes(topic)) {
+    return NextResponse.json({
+      success: false, message: "This topic is invalid"
+    }, {status: 400})
+  }
+  const knowledgeContent = fs.readFileSync(`knowledge/${topic}.txt`, 'utf8');
+  console.log(knowledgeContent)
+
   const speechconfig = speechSDK.SpeechConfig.fromSubscription(
     process.env["AZURE_SPEECH_KEY"],
     process.env["AZURE_SPEECH_REGION"]
   )
-  const {topic} = params
   const question = req.nextUrl.searchParams.get("question") 
-  const topicContent = topicContents.find(i => i.topic === topic) || topicContents[0]
   const teacher = "Olivia" // or Oliver
-  console.log(question)
   speechconfig.speechSynthesisVoiceName = `en-GB-${teacher}Neural` // UK
 
   const speechSynthesizer = new speechSDK.SpeechSynthesizer(speechconfig)
@@ -32,19 +34,22 @@ export async function GET(req, {params}) {
     visemes.push([e.audioOffset / 10000 , e.visemeId])
   }
 
-
   console.log("---- CHAT PROCESSING ----- ")
 
   const completion = await openai.chat.completions.create({
     model: "gpt-3.5-turbo-1106",
     messages: [
       {
+        "role": "system",
+        content: "Your Name is Acadoze and you are an experienced elementary teacher and also an expert in History. If you are asked about sexuality or anything inappropriate, you do not answer and ask them to speak to an adult. With a passion for History, you guide students towards a love for learning and exploration."
+      },
+      {
         "role": "system", 
-        "content": `First evaluate the message and use ${topicContent.content} as your knowlegde bank. The message is a question. Limit your tokens to 100 tokens. You should respond with the answer`
+        "content": knowledgeContent
       },
       {
         role: "user",
-        content: `${question || `What does ${topicContent.topic} mean`} `
+        content: question || ""
       }
     ],
   });

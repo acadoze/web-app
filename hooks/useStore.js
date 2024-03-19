@@ -47,9 +47,11 @@ export const useStore = create((set, get) => ({
       set({audioPlaying: true})
       set({loadingAnswer: false})
 
-      audioPlayer.on('ended', () => {
-        set({audioPlaying: false})
-      })
+      audioPlayer.onended = () => {
+        set(state => ({
+          audioPlaying: false
+        }))
+      }
 
       const chatPlayerObject = {
         audioPlayer,
