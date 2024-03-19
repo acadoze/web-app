@@ -24,8 +24,8 @@ export async function GET(req, {params}) {
     process.env["AZURE_SPEECH_REGION"]
   )
   const question = req.nextUrl.searchParams.get("question") 
-  const teacher = "Olivia" // or Oliver
-  speechconfig.speechSynthesisVoiceName = `en-GB-${teacher}Neural` // UK
+  const teacher = "Ava" // or Andrew
+  speechconfig.speechSynthesisVoiceName = `en-US-${teacher}Neural` // UK
 
   const speechSynthesizer = new speechSDK.SpeechSynthesizer(speechconfig)
   const visemes = []
