@@ -12,7 +12,8 @@ export default function Teacher({teacher, ...props}) {
 	const {scene} = useGLTF(`/models/Teacher_Nanami.glb`)
 
   const chatPlayerObject = useStore(state => state.chatPlayerObject);
-  const loadingTopicContent = useStore(state => state.loadingTopicContent);
+  const loadingAnswer = useStore(state => state.loadingAnswer);
+  const audioPlaying = useStore(state => state.audioPlaying);
 	const [blink, setBlink] = useState(false)
 	  const group = useRef();
 
@@ -44,14 +45,14 @@ export default function Teacher({teacher, ...props}) {
     return () => clearTimeout(blinkTimeout);
   }, []);
 	 useEffect(() => {
-	    if (loadingTopicContent) {
+	    if (loadingAnswer) {
 	      setAnimation("Thinking");
-	    } else if (chatPlayerObject) {
+	    } else if (audioPlaying) {
 	      setAnimation(randInt(0, 1) ? "Talking" : "Talking2");
 	    } else {
 	      setAnimation("Idle");
 	    }
-	 }, [chatPlayerObject, loadingTopicContent]);
+	 }, [loadingAnswer, audioPlaying]);
 
 
 	useEffect(() => {
@@ -106,6 +107,7 @@ export default function Teacher({teacher, ...props}) {
         }
       }
       if (
+      	audioPlaying &&
         actions[animation].time >
         actions[animation].getClip().duration - ANIMATION_FADE_TIME
       ) {

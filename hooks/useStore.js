@@ -1,6 +1,5 @@
 import {create} from "zustand"
 import {v4 as uuid} from "uuid"
-import axios from "axios"
 
 /** 
   currentPlayerObj: {
@@ -11,99 +10,58 @@ import axios from "axios"
 */
 
 export const useStore = create((set, get) => ({
-  loadingTopicContent: false,
   topic: "",
+  audioPlaying: false,
+  thread: [],
 
-  tutorPlayerObject: null,
   chatPlayerObject: null,
+
+  loadingAnswer: false,
+
+  setLoader: (bool) => {
+    set({loadingAnswer: bool})
+  },
 
   setTopic: topic => {
     set({
       topic
     })
+    console.log(topic)
   },
 
-  setLoaderState: (value) => {
-    set({
-      loadingTopicContent: value
-    })
-  },
-
-  askTutor: (question) => {
+  askTutor: async (question) => {
     if (!question) return
-    axios.get(`/api/topic/${get().topic}/chat?question=${question}`)
-    .then(async chatResponse => {
-      const content = JSON.parse(chatResponse.data.message.content)
-      console.log(content)
-
-      const audioRes = await fetch(`/api/tts?resource_type=content&content=${content.answer}`)
+    set(state => ({
+      loadingAnswer: true
+    }))
+    try {
+      const audioRes = await fetch(`/api/topic/${get().topic}/chat?question=${question}`)
       const audio = await audioRes.blob()
       const visemes = JSON.parse(await audioRes.headers.get('visemes'))
       const audioURL = URL.createObjectURL(audio)
       const audioPlayer = new Audio(audioURL)
+      console.log(audioRes)
 
       audioPlayer.currentTime = 0
       audioPlayer.play()
+      set({audioPlaying: true})
+      set({loadingAnswer: false})
+
+      audioPlayer.on('ended', () => {
+        set({audioPlaying: false})
+      })
 
       const chatPlayerObject = {
         audioPlayer,
-        visemes,
-        textContent: content.answer
+        visemes
       }
 
       set({chatPlayerObject})
-    })
-  },
-
-  playTextContent: async (tutorPlayerObject) => {
-    set({loadingTopicContent: true})
-    if (!tutorPlayerObject.audioPlayer) {
-
-      const audioRes = await fetch(`/api/tts?resource_type=topic&topic=${get().topic}`)
-
-      const audio = await audioRes.blob()
-      const visemes = JSON.parse(await audioRes.headers.get('visemes'))
-      const audioURL = URL.createObjectURL(audio)
-      const audioPlayer = new Audio(audioURL)
-
-      let tutorPlayerObject = {}
-
-      tutorPlayerObject.visemes = visemes
-      tutorPlayerObject.audioPlayer = audioPlayer
-      tutorPlayerObject.audioPlayer.onended = () => {}
-
-      tutorPlayerObject.audioPlayer.currentTime = 0
-      tutorPlayerObject.audioPlayer.play()
-
-      set({
-        loadingTopicContent: false,
-        tutorPlayerObject
-      })
+    } catch (err) {
+      set({loadingAnswer: false})
     }
-    
-  },
 
-  stopTutorPlayerObject: (tutorPlayerObject) => {
-    tutorPlayerObject.audioPlayer.pause()
-  },
-
-  getTopicContent: async (topic) => {
-    set({loadingTopicContent: true})
-
-    axios.get(`/api/topic/${get().topic}`)
-    .then(async (response) => {
-      const {data} = response
-
-      const tutorPlayerObject = {
-        textContent: data.topicContent.textContent
-      }
-
-      set(state => ({
-        loadingTopicContent: false,
-        tutorPlayerObject
-      }))
-      get().playTextContent(tutorPlayerObject)
-    })
+      
   },
   
 }))
