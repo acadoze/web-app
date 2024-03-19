@@ -19,7 +19,7 @@ export default function Header() {
         </div>
         <div>
           <li>
-            <Link href={"/signin"} className="py-2 px-5 flex items-center text-white font-600">
+            <Link href={"/auth"} className="py-2 px-5 flex items-center text-white font-600">
               <IoMdPerson className="mr-2"/> Log In
             </Link>
           </li>
