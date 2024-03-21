@@ -20,7 +20,6 @@ export default function TypingBox() {
   const playAudio = useStore(state => state.playAudio)
   const pauseAudio = useStore(state => state.pauseAudio)
   const chatPlayerObject = useStore(state => state.chatPlayerObject)
-  const loadingAnswer = useStore(state => state.loadingAnswer)
   const [question, setQuestion] = useState("")
   const loadingAnswer = useStore(state => state.loadingAnswer);
   const [isRecording, setRecording] = useState(false);
@@ -32,7 +31,9 @@ export default function TypingBox() {
   }, [displayText])
 
   useEffect(() => {
-    return () => pauseAudio()
+    return () => {
+      pauseAudio()
+    }
   }, [])
 
 

@@ -9,7 +9,7 @@ export default function Experience() {
   return (
     <>
       <OrbitControls /> 
-      // <Teacher position={[0, -2.5, 5]} scale={2} fov={42} />
+      <Teacher position={[0, -2.5, 5]} scale={2} fov={42} />
       <Environment preset={'sunset'} />
       <mesh>
         <planeGeometry args={[viewport.width, viewport.height]}  />
