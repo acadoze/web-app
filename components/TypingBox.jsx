@@ -20,6 +20,7 @@ export default function TypingBox() {
   const playAudio = useStore(state => state.playAudio)
   const pauseAudio = useStore(state => state.pauseAudio)
   const chatPlayerObject = useStore(state => state.chatPlayerObject)
+  const loadingAnswer = useStore(state => state.loadingAnswer)
   const [question, setQuestion] = useState("")
   const loadingAnswer = useStore(state => state.loadingAnswer);
   const [isRecording, setRecording] = useState(false);
@@ -130,6 +131,7 @@ export default function TypingBox() {
       
       <button 
         className="flex justify-center items-center ml-2 bg-[#10c6fe] text-[white] border-0 rounded-[40px] px-1 py-1 py-[7px] px-[20px]"
+        disable={loadingAnswer}
         onClick={() => askTutor(question)}
       >
         Send
@@ -158,7 +160,7 @@ function PlayControls({chatPlayerObject, playAudio, pauseAudio}) {
   if (chatPlayerObject && chatPlayerObject.audioPlaying) {
     return <IoPauseOutline className="text-[2rem] text-[#10c6fe]" onClick={pauseAudio} />
   } 
-  
+
   if (chatPlayerObject && !chatPlayerObject.audioPlaying) {
       return <FaPlay className="text-[2rem] text-[#10c6fe]" onClick={playAudio} />
   }
