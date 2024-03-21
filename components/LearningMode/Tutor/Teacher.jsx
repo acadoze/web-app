@@ -12,7 +12,6 @@ export default function Teacher({teacher, ...props}) {
 
   const chatPlayerObject = useStore(state => state.chatPlayerObject);
   const loadingAnswer = useStore(state => state.loadingAnswer);
-  const audioPlaying = useStore(state => state.audioPlaying);
 	const [blink, setBlink] = useState(false)
 	const group = useRef();
 
@@ -49,12 +48,12 @@ export default function Teacher({teacher, ...props}) {
    useEffect(() => {
       if (loadingAnswer) {
         setAnimation("Thinking");
-      } else if (audioPlaying) {
+      } else if (chatPlayerObject && chatPlayerObject.audioPlaying) {
         setAnimation(randInt(0, 1) ? "Talking" : "Talking2");
       } else {
         setAnimation("Idle");
       }
-   }, [loadingAnswer, audioPlaying]);
+   }, [loadingAnswer, chatPlayerObject]);
 
   useFrame(({ camera }) => {
     // Smile
@@ -69,9 +68,9 @@ export default function Teacher({teacher, ...props}) {
 
     if (
       chatPlayerObject &&
-      audioPlaying &&
-      chatPlayerObject.visemes &&
-      chatPlayerObject.audioPlayer
+      chatPlayerObject.audioPlayer &&
+      chatPlayerObject.audioPlaying &&
+      chatPlayerObject.visemes
     ) {
       for (let i = chatPlayerObject.visemes.length - 1; i >= 0; i--) {
         const viseme = chatPlayerObject.visemes[i];

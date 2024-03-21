@@ -28,21 +28,23 @@ export default function Home() {
       <StudentHeader name={studentName} />
       <section className="bg-blue pb-[3rem] ">
         <div className="x_spacing flex justify-center items-center flex-col relative">
-          <img src="/Group 77808.png" className="w-[auto] h-[450px]" />
+          <img src="/Group 77808.png" className="w-[auto]" />
           <h2 className={`${outfit.className} absolute top-[80%] text-[1.5rem] text-[white] font-[600]`}> HISTORY </h2>
         </div>
 
-        <div className="w-[650px] h-[400px] mx-[auto] bg-[white] rounded-2xl relative">
+        <div className="x_spacing h-[575px]  mx-[auto] bg-[white] rounded-2xl relative">
           {
-            <div className="w-[inherit] h-[340px] mx-[auto] bg-[white] shadow-2xl rounded-[inherit] relative">
+            <div className="w-[inherit] h-[90%] flex flex-col justify-start items-center mx-[auto] bg-[white] shadow-2xl rounded-[inherit] relative">
               {
                 learningMode === "watch" ?
                   <Watch />
                 : learningMode === "assessment" ?
                   <Assessment />
                 : learningMode === "tutor" ?
-                  <><TypingBox />
-                  <Canvas /></>
+                  <>
+                    <TypingBox />
+                    <Canvas />
+                  </>
                 : <Read />
               }
             </div>

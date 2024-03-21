@@ -3,11 +3,15 @@ import OpenAI from "openai"
 import * as speechSDK from "microsoft-cognitiveservices-speech-sdk"
 import { PassThrough } from 'stream'
 import fs from "fs"
-
+const speechconfig = speechSDK.SpeechConfig.fromSubscription(
+  process.env["AZURE_SPEECH_KEY"],
+  process.env["AZURE_SPEECH_REGION"]
+)
 const config = {
   apiKey: process.env["OPENAI_KEY"]
 }
 const openai = new OpenAI(config)
+const messages = []
 
 export async function GET(req, {params}) {
   const {topic} = params
@@ -19,10 +23,7 @@ export async function GET(req, {params}) {
   }
   const knowledgeContent = fs.readFileSync(`knowledge/${topic}.txt`, 'utf8');
 
-  const speechconfig = speechSDK.SpeechConfig.fromSubscription(
-    process.env["AZURE_SPEECH_KEY"],
-    process.env["AZURE_SPEECH_REGION"]
-  )
+  
   const question = req.nextUrl.searchParams.get("question") 
   const teacher = "Ava" // or Andrew
   speechconfig.speechSynthesisVoiceName = `en-US-${teacher}Neural` // UK
@@ -38,7 +39,7 @@ export async function GET(req, {params}) {
     messages: [
       {
         "role": "system",
-        content: "Your Name is Acadoze and you are an experienced elementary teacher and also an expert in History. With a passion for History, you guide students towards a love for learning and exploration."
+        content: "Your Name is Acadoze and you are an experienced elementary teacher and also an expert in History. With a passion for History, you guide students towards a love for learning and exploration. Your response should have a full stop at the end of every sentence. Use 'umhs' when answering a question in the conversation and let the conversational style be for children. ,"
       },
       {
         "role": "system", 
@@ -49,7 +50,9 @@ export async function GET(req, {params}) {
         content: question || ""
       }
     ],
+    temperature: 0.5
   });
+  console.log("--- CHAT COMPLETE ---")
 
   const chatAnswer = completion.choices[0].message.content
  
@@ -70,6 +73,7 @@ export async function GET(req, {params}) {
       }
     )
   })
+  console.log("--- AUDIO COMPLETE ---")
 
   return new Response(audioStream, {
     headers: {

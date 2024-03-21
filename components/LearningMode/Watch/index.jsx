@@ -7,8 +7,10 @@ export default function Watch() {
   }, [])
   
   return (
-    showLoader ? 
-      <PlayerLoader /> 
-    : <></>
+    <>
+      <iframe width="560" height="315" className="w-[inherit] h-[inherit]" src="https://www.youtube.com/embed/SolayM9AVcI" frameBorder="0" loading="lazy" allowFullScreen>
+      </iframe>
+
+    </> 
   )
 }

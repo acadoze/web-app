@@ -11,7 +11,6 @@ import {v4 as uuid} from "uuid"
 
 export const useStore = create((set, get) => ({
   topic: "",
-  audioPlaying: false,
   thread: [],
 
   chatPlayerObject: null,
@@ -29,6 +28,27 @@ export const useStore = create((set, get) => ({
     console.log(topic)
   },
 
+  playAudio: () => {
+    const chatPlayerObject = get().chatPlayerObject
+    if (!chatPlayerObject || !chatPlayerObject.audioPlayer) {
+      return 
+    }
+    chatPlayerObject.audioPlayer.play()
+    set({
+      chatPlayerObject: {...chatPlayerObject, audioPlaying: false}
+    })
+  },
+  pauseAudio: async () => {
+    const chatPlayerObject = get().chatPlayerObject
+    if (!chatPlayerObject || !chatPlayerObject.audioPlayer || !chatPlayerObject.audioPlaying) {
+      return 
+    }
+    chatPlayerObject.audioPlayer.pause()
+    set({
+      chatPlayerObject: {...chatPlayerObject, audioPlaying: false}
+    })    
+  },
+
   askTutor: async (question) => {
     if (!question) return
     set(state => ({
@@ -40,22 +60,28 @@ export const useStore = create((set, get) => ({
       const visemes = JSON.parse(await audioRes.headers.get('visemes'))
       const audioURL = URL.createObjectURL(audio)
       const audioPlayer = new Audio(audioURL)
-      console.log(audioRes)
 
       audioPlayer.currentTime = 0
       audioPlayer.play()
-      set({audioPlaying: true})
+      
       set({loadingAnswer: false})
 
       audioPlayer.onended = () => {
-        set(state => ({
-          audioPlaying: false
-        }))
+        set({chatPlayerObject: {...get().chatPlayerObject, audioPlaying: false}})
+      };
+
+      audioPlayer.onpaused = () => {
+        set({chatPlayerObject: {...get().chatPlayerObject, audioPlaying: false}})
+        console.log(chatPlayerObject)
+      }
+
+      audioPlayer.onplay = () => {
+        set({chatPlayerObject: {...get().chatPlayerObject, audioPlaying: true}})
       }
 
       const chatPlayerObject = {
         audioPlayer,
-        visemes
+        visemes,
       }
 
       set({chatPlayerObject})

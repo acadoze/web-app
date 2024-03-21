@@ -21,9 +21,14 @@
 }
 .Toastify__toast-body { font-family: 'system-ui'; }
 .x_spacing {
-  width: 780px;
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
+}
+@media screen and (min-width: 780px) {
+  .x_spacing {
+   width: 830px;
+  }
 }
 .partners img {
   width: auto;
