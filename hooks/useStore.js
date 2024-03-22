@@ -75,7 +75,7 @@ export const useStore = create((set, get) => ({
         return
       }
       const audio = await audioRes.blob()
-      const {visemes} = JSON.parse(await audioRes.headers)
+      const visemes = JSON.parse(audioRes.headers.get("visemes"))
       const audioURL = URL.createObjectURL(audio)
       const audioPlayer = new Audio(audioURL)
 
@@ -104,6 +104,7 @@ export const useStore = create((set, get) => ({
 
       set({chatPlayerObject})
     } catch (err) {
+      console.error(err)
       set({loadingAnswer: false})
     }
 
