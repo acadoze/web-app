@@ -149,3 +149,10 @@ body {
 .active_l.mode_btn {
   background-color: #c6f3ff;
 }
+
+.t_classes > a {
+  height: 100px;
+  width: 100px;
+  border: 1px solid #c6f3ff;
+  border-radius: 100px;
+}

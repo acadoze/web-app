@@ -38,7 +38,6 @@ export default function TypingBox() {
 
 
   async function sttFromMic() {
-    setRecording(true)
     const tokenObj = await getTokenOrRefresh();
     const speechConfig = speechsdk.SpeechConfig.fromAuthorizationToken(tokenObj.authToken, tokenObj.region);
     speechConfig.speechRecognitionLanguage = 'en-US';
@@ -48,8 +47,10 @@ export default function TypingBox() {
 
     setDisplayText("Speak into the microphone...");
 
+    setRecording(true)
     recognizer.recognizeOnceAsync(result => {
       setRecording(false)
+      console.log(result)
       if (result.reason === ResultReason.RecognizedSpeech) {
         setQuestion(text => {
           text += ` ${result.text}`
@@ -96,18 +97,18 @@ export default function TypingBox() {
 
   return (
     <>
-    <div className="w-[100%] flex justify-center items-center text-[.8rem]  mx-[auto] absolute z-[6] bottom-[5px]">
+    <div className="w-[100%] bg-[white] flex justify-center items-center text-[.8rem]  mx-[auto] absolute z-[6] bottom-[0]">
       <FaMicrophone
         className="text-[#10c6fe] cursor-pointer text-[1.8rem] mr-2" 
         onClick={sttFromMic}
       />
 
-      <div className="text-[black] w-[60%] bg-[white] rounded-md flex items-center">
+      <div className="text-[black] pt-2 w-[60%] bg-[white] rounded-md flex items-center">
         <textarea 
           onChange={e => setQuestion(e.target.value)} 
           value={question} 
           placeholder="Type here" 
-          className="resize-none w-[90%] text-[black] bg-[white] rounded-md px-3 py-2 border-0 outline-0" 
+          className="resize-none w-[90%] text-[black] bg-[white] rounded-md px-3 py-3 border-b-solid border-b-1 border-b-[#000] outline-0" 
         />
         {
           isRecording && 
@@ -132,7 +133,7 @@ export default function TypingBox() {
       
       <button 
         className="flex justify-center items-center ml-2 bg-[#10c6fe] text-[white] border-0 rounded-[40px] px-1 py-1 py-[7px] px-[20px]"
-        disable={loadingAnswer}
+        disabled={loadingAnswer}
         onClick={() => askTutor(question)}
       >
         Send

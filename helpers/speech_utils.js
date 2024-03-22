@@ -7,16 +7,20 @@ export async function getTokenOrRefresh() {
 
     if (speechToken === undefined) {
         try {
-            const res = await axios.get('/api/tts/speech_token');
-            const token = res.data.token;
-            const region = res.data.region;
+            const res = await fetch(`${process.env.API_BASE}/tts/speech_token`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("authToken")}`
+                }
+            });
+            const token = res.token;
+            const region = res.region;
             cookie.set('speech-token', region + ':' + token, {maxAge: 540, path: '/'});
 
             console.log('Token fetched from back-end: ' + token);
             return { authToken: token, region: region };
         } catch (err) {
-            console.log(err.response.data);
-            return { authToken: null, error: err.response.data };
+            console.log(err);
+            return { authToken: null, error: err };
         }
     } else {
         const idx = speechToken.indexOf(':');

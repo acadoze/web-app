@@ -10,22 +10,33 @@ import {v4 as uuid} from "uuid"
 */
 
 export const useStore = create((set, get) => ({
-  topic: "",
-  thread: [],
+  topicId: "",
+  assignedTopics: [],
+  authToken: null,
 
   chatPlayerObject: null,
 
   loadingAnswer: false,
 
+  authExpired: false,
+
+  setAuthToken: authToken => {
+    set({authToken})
+  },
+
+  setAssignedTopics: (assignedTopics) => {
+    set({assignedTopics})
+  },
+
   setLoader: (bool) => {
     set({loadingAnswer: bool})
   },
 
-  setTopic: topic => {
+  setTopicId: topicId => {
     set({
-      topic
+      topicId
     })
-    console.log(topic)
+    console.log(topicId)
   },
 
   playAudio: () => {
@@ -49,15 +60,22 @@ export const useStore = create((set, get) => ({
     })    
   },
 
-  askTutor: async (question) => {
+  askTutor: async (question, topicId) => {
     if (!question) return
     set(state => ({
       loadingAnswer: true
     }))
     try {
-      const audioRes = await fetch(`/api/topic/${get().topic}/chat?question=${question}`)
+      const audioRes = await fetch(`${process.env.API_BASE}/topic/${get().topicId}/chat?question=${question}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`
+        }
+      })
+      if (audioRes.status !== 200) {
+        return
+      }
       const audio = await audioRes.blob()
-      const visemes = JSON.parse(await audioRes.headers.get('visemes'))
+      const {visemes} = JSON.parse(await audioRes.headers)
       const audioURL = URL.createObjectURL(audio)
       const audioPlayer = new Audio(audioURL)
 

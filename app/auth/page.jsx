@@ -1,6 +1,4 @@
 "use client"
-import Link from "next/link";
-import { LiaTimesSolid } from "react-icons/lia";
 import {useState, useEffect} from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,20 +7,107 @@ import { ThreeCircles } from 'react-loader-spinner'
 import { Orbitron, Poppins, Outfit } from "next/font/google";
 const outfit = Outfit({ subsets: ["latin"] });
 import { FaRegTimesCircle } from "react-icons/fa";
+import { useRouter  } from 'next/navigation'
+import {useStore} from "@/hooks/useStore"
 
-function Auth({hidePopup, handleForm, showLoader}) {
+function Auth({hidePopup, role}) {
 
+  const [authType, setAuthType] = useState("put")
   const [email, setEmail] = useState("")
+  const [fullName, setFullName] = useState("")
   const [password, setPassword] = useState("")
+  const [showLoader, setLoader] = useState(false)
+  const setAuthToken = useStore(state => state.setAuthToken)
+  const router = useRouter()
+
+  function signIn(argument) {
+    fetch(`${process.env.API_BASE}/auth?role=${role}`, {
+      body: JSON.stringify({email, password}),
+      method: 'put',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(async (response) => {
+      let jsonRes = await response.json()
+      if (response.status === 200) {
+        router.push('/' + role)
+        localStorage.setItem("authToken", jsonRes.data.authToken)
+      } else {
+        toast.warn(jsonRes.message)
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
+    .finally(() => {
+      setLoader(false)
+    })
+  }
+  function signUp(argument) {
+    fetch(`${process.env.API_BASE}/auth?role=${role}`, {
+      body: JSON.stringify({email, password, fullName}),
+      method: 'post',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(async (response) => {
+      let jsonRes = await response.json()
+      if (response.status === 201) {
+        toast.info(jsonRes.message)
+      } else {
+        toast.warn(jsonRes.message)
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
+    .finally(() => {
+      setLoader(false)
+    })
+  }
+
+  function handleForm(argument) {
+    setLoader(true)
+    if (authType === "put") signIn()
+    if (authType === "post") signUp()
+  }
 
   return (
-    <div className="bg-[rgb(0,0,0,0.4)] fixed w-[100vw] flex justify-center items-center h-[100vh] z-[4]">
-      <div className="rounded-2xl h-[400px] w-[600px] flex justify-center flex-col items-center bg-[white] relative">
+    <div className="bg-[rgb(0,0,0,0.4)]  fixed w-[100vw] flex justify-center items-center h-[100vh] z-[4]">
+      <div className="rounded-2xl min-h-[400px] pb-[35px] w-[600px] flex justify-center flex-col items-center bg-[white] relative">
         <FaRegTimesCircle className="absolute top-[15px] right-[15px]" onClick={hidePopup} />
         <form className="site_form" onSubmit={e => {
           e.preventDefault()
           handleForm({email, password})
         }}>
+          <h2 className="uppercase text-[1.5rem] ">
+            {
+              authType === "put" ? "log IN " : "register "
+            }
+            as a 
+            {
+              role === "student" ? " STuDENT" : " teacher"
+            }
+          </h2>
+          <p className="mb-5">
+            {
+              authType === "put" ? 
+                <button  type="button"> Not registered?&nbsp; <span className="text-darkCyan" onClick={() => {setAuthType("post")}}> Register </span> </button>
+              :  <button type="button"> 
+                  Already have an account?&nbsp;
+                  <span className="text-darkCyan"  onClick={() => {setAuthType("put")}}>Log In </span>
+                </button>
+            }
+          </p>
+          {
+            authType === "post" &&
+            <li>
+              <label htmlFor="name"> Full name </label>
+              <input type="text" id="name" className="" value={fullName} onChange={e => setFullName(e.target.value)} />
+            </li>
+          }
           <li>
             <label htmlFor="email"> Email </label>
             <input type="email" id="email" className="" value={email} onChange={e => setEmail(e.target.value)} />
@@ -33,17 +118,15 @@ function Auth({hidePopup, handleForm, showLoader}) {
           </li>
           <div className="flex justify-center gap-x-[10px]">
             <button 
-              onClick={hidePopup}
-              className="align-center text-white flex justify-center items-center bg-[#deb887] text-[white] px-[10px] rounded-md py-[8px]" 
-            > Cancel </button>
-            <button 
-              className="align-center text-white flex justify-center items-center bg-darkCyan text-[white] px-[10px] rounded-md py-[8px]" 
+              className="w-full align-center uppercase text-white flex justify-center items-center bg-darkCyan text-[white] px-[10px] rounded-md py-[8px]" 
+              disabled={showLoader}
             > 
-              Log In
+              {
+                authType === "put" ? "log in" : "register"
+              }
               {
                 showLoader ? 
                 <ThreeCircles
-                  className="ml-2"
                   visible={true}
                   height="20"
                   width="20"
@@ -51,7 +134,7 @@ function Auth({hidePopup, handleForm, showLoader}) {
                   radius="9"
                   ariaLabel="loading"
                   wrapperStyle={{}}
-                  wrapperClass=""
+                  wrapperClass="ml-1"
                 /> : <></>
               }
             </button>
@@ -64,42 +147,21 @@ function Auth({hidePopup, handleForm, showLoader}) {
 }
 
 export default function Signin() {
-  const [showLoader, setLoader] = useState(false)
   const [currentPopup, setCurrentPopup] = useState("")
 
-  function handleForm({email, password}) {
-    if (currentPopup === "") return
-    if (email === "" || password === "") {
-      toast.warn("Email or password must not be empty")
-      return false
-    }
-    setLoader(true)
-    axios.put(`/api/auth?identity=${currentPopup}`, {email, password})
-    .then(async (response) => {
-      const {data} = response
-      toast.info(data.message);
-      setLoader(false)
-    })
-    .catch(err => {
-      console.log(err)
-      toast.error(err.response.data.message || err.message)
-      setLoader(false)
-    })
-  }
   function hidePopup(argument) {
     setCurrentPopup("")
-    setLoader(false)
   }
 
   return (
     <>
     {
       currentPopup === "student" &&
-        <Auth hidePopup={hidePopup} handleForm={(values) => handleForm(values)} showLoader={showLoader} />
+        <Auth hidePopup={hidePopup} role={"student"} />
     }
     {
       currentPopup === "teacher" &&
-        <Auth hidePopup={hidePopup} handleForm={(values) => handleForm(values)} showLoader={showLoader} />
+        <Auth hidePopup={hidePopup} role={"teacher"} />
     }
     <main className={`${outfit.className} relative bg-blue h-[100vh] w-[100vw]`}>
       <section className="flex flex-col justify-center items-center">
