@@ -17,12 +17,12 @@ export default function Home() {
   const [classRooms, setClassRooms] = useState([])
   const [user, setUser] = useState({})
   const [loader, setLoader] = useState(true)
-  const [authToken] = useState(localStorage.getItem("authToken"))
   const router = useRouter()
-
   
   useEffect(() => {
-
+    let authToken
+    localStorage.getItem("authToken") || ""
+    
     async function fUsers() {
       const fetchUser = await fetch(`${process.env["API_BASE"]}/teacher`, {
         headers: {

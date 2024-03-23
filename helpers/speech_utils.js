@@ -12,8 +12,9 @@ export async function getTokenOrRefresh() {
                     Authorization: `Bearer ${localStorage.getItem("authToken")}`
                 }
             });
-            const token = res.token;
-            const region = res.region;
+            const jsonRes = await res.json()
+            const token = jsonRes.token;
+            const region = jsonRes.region;
             cookie.set('speech-token', region + ':' + token, {maxAge: 540, path: '/'});
 
             console.log('Token fetched from back-end: ' + token);

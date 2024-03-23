@@ -1,6 +1,6 @@
 import { BsSend } from "react-icons/bs";
 import {askTutor} from "@/hooks/useStore"
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import {useStore} from "@/hooks/useStore"
 import { ThreeCircles, Rings } from 'react-loader-spinner'
 import { FaMicrophone  } from "react-icons/fa";
@@ -25,6 +25,8 @@ export default function TypingBox() {
   const [isRecording, setRecording] = useState(false);
   const [displayText, setDisplayText] = useState('');
   const [player, updatePlayer] = useState({p: undefined, muted: false});
+  const [recTranscript, setRecTranscript] = useState("")
+  const recognizer = useRef(null)
 
   useEffect(() => {
     displayText !== "" && toast.info(displayText);
@@ -36,6 +38,14 @@ export default function TypingBox() {
     }
   }, [])
 
+  function stopRecording(argument) {
+    console.log('als')
+    recognizer.current.stopContinuousRecognitionAsync(() => {
+      console.log('Speech recognition stopped.');
+    });
+    setRecording(false)
+  }
+
 
   async function sttFromMic() {
     const tokenObj = await getTokenOrRefresh();
@@ -43,56 +53,42 @@ export default function TypingBox() {
     speechConfig.speechRecognitionLanguage = 'en-US';
     
     const audioConfig = speechsdk.AudioConfig.fromDefaultMicrophoneInput();
-    const recognizer = new speechsdk.SpeechRecognizer(speechConfig, audioConfig);
+    recognizer.current = new speechsdk.SpeechRecognizer(speechConfig, audioConfig);
 
     setDisplayText("Speak into the microphone...");
 
     setRecording(true)
-    recognizer.recognizeOnceAsync(result => {
-      setRecording(false)
-      console.log(result)
-      if (result.reason === ResultReason.RecognizedSpeech) {
-        setQuestion(text => {
-          text += ` ${result.text}`
-          return text
-        })
-      } else {
-        setDisplayText('Speech was cancelled or could not be recognized. Ensure your microphone is working properly.');
-      }
+    recognizer.current.startContinuousRecognitionAsync(() => {
+      console.log('Speech recognition started.');
+      setRecording(true)
     });
+    recognizer.current.recognizing = (s, event) => {
+      console.log(s, e)
+      const result = event.result;
+
+      if (result.reason === speechsdk.ResultReason.RecognizingSpeech) {
+        const transcript = result.text;
+        console.log('Transcript: -->', transcript);
+        // Call a function to process the transcript as needed
+
+        setRecTranscript(transcript);
+      }
+    }
+
+    recognizer.current.recognized = (s, e) => {
+      const result = event.result;
+      console.log(s, e)
+
+      if (result.reason === speechsdk.ResultReason.RecognizingSpeech) {
+        const transcript = result.text;
+        console.log('Transcript: -->', transcript);
+        // Call a function to process the transcript as needed
+
+        setRecTranscript(transcript);
+      }
+      setRecording(false)
+    }
   }
-
-  // async function textToSpeech() {
-  //   const tokenObj = await getTokenOrRefresh();
-  //   const speechConfig = speechsdk.SpeechConfig.fromAuthorizationToken(tokenObj.authToken, tokenObj.region);
-  //   const myPlayer = new speechsdk.SpeakerAudioDestination();
-  //   updatePlayer(p => {p.p = myPlayer; return p;});
-  //   const audioConfig = speechsdk.AudioConfig.fromSpeakerOutput(player.p);
-
-  //   let synthesizer = new speechsdk.SpeechSynthesizer(speechConfig, audioConfig);
-
-  //   const textToSpeak = 'This is an example of speech synthesis for a long passage of text. Pressing the mute button should pause/resume the audio output.';
-  //   setDisplayText(`speaking text: ${textToSpeak}...`);
-  //   synthesizer.speakTextAsync(
-  //   textToSpeak,
-  //   result => {
-  //     let text;
-  //     if (result.reason === speechsdk.ResultReason.SynthesizingAudioCompleted) {
-  //         text = `synthesis finished for "${textToSpeak}".\n`
-  //     } else if (result.reason === speechsdk.ResultReason.Canceled) {
-  //         text = `synthesis failed. Error detail: ${result.errorDetails}.\n`
-  //     }
-  //     synthesizer.close();
-  //     synthesizer = undefined;
-  //     setDisplayText(text);
-  //   },
-  //   function (err) {
-  //     setDisplayText(`Error: ${err}.\n`);
-
-  //     synthesizer.close();
-  //     synthesizer = undefined;
-  //   });
-  // }
 
 
   return (
@@ -119,7 +115,7 @@ export default function TypingBox() {
             color="#4fa94d"
             ariaLabel="rings-loading"
             wrapperStyle={{}}
-            wrapperClass=""
+            wrapperClass="cursor-pointer"
           />
 
         }
@@ -139,16 +135,18 @@ export default function TypingBox() {
         Send
         {
           loadingAnswer &&
-          <ThreeCircles
-            visible={true}
-            height="20"
-            width="20"
-            color="#fff"
-            radius="9"
-            ariaLabel="loading"
-            wrapperStyle={{}}
-            wrapperClass="ml-2"
-          />
+          <button onClick={stopRecording}>
+            <ThreeCircles
+              visible={true}
+              height="20"
+              width="20"
+              color="#fff"
+              radius="9"
+              ariaLabel="loading"            
+              wrapperStyle={{}}
+              wrapperClass="ml-2"
+            />
+          </button>
         }
       </button>
       

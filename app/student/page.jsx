@@ -17,25 +17,27 @@ export default function Home() {
   const [studentName, setName] = useState("Alex")
   const assignedTopics = useStore(state => state.assignedTopics)
   const setAssignedTopics = useStore(state => state.setAssignedTopics)
-  const [authToken] = useState(localStorage.getItem("authToken"))
   const router = useRouter()
-
-  async function fetchTopics(argument) {
-    const topics = await fetch(`${process.env["API_BASE"]}/student/topics`, {
-      headers: {
-        Authorization: `Bearer ${authToken}`
-      }
-    })
-    let jsonRes = await topics.json()
-    if (topics.status === 401) {
-      router.push('/auth')
-    } else {
-      topics && setAssignedTopics(jsonRes.topics)
-    }
-  }
+  
   
   useEffect(() => {
+    async function fetchTopics(argument) {
+      let authToken
+      authToken = localStorage.getItem("authToken") || ""
+      const topics = await fetch(`${process.env["API_BASE"]}/student/topics`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`
+        }
+      })
+      let jsonRes = await topics.json()
+      if (topics.status === 401) {
+        router.push('/auth')
+      } else {
+        topics && setAssignedTopics(jsonRes.topics)
+      }
+    }
     fetchTopics()
+    
     
   }, [])
 
