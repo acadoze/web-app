@@ -15,8 +15,6 @@ export default function Asssessment() {
   const router = useRouter()
   const [currentQuestion, setCurrentQuestion] = useState(false)
   const [responses, setResponses] = useState([])
-  const [currentQOption, setCurrentQuestionCheckedOption] = useState("")
-
 
   useEffect(() => {
     async function fetchQuiz() {
@@ -42,14 +40,10 @@ export default function Asssessment() {
   }, [])
 
   useEffect(() => {
-    console.log(quiz)
     if (quiz.questions?.length > 0) {
       setCurrentQuestion(quiz.questions[0])
     }
   }, [quiz])
-  useEffect(() => {
-    // setCu
-  }, [responses])
 
   function submitQuiz(argument) {
     // body...
@@ -59,13 +53,18 @@ export default function Asssessment() {
     if (!currentQuestion) return
     const find = quiz.questions.findIndex(i => i.id === currentQuestion.id)
     if (quiz.questions[find+1] === undefined) return
+    const nFind = responses.findIndex(i => i.questionId === currentQuestion.id)
     setCurrentQuestion(quiz.questions[find+1])
+
+
+
   }
 
   function setPrevQ() {
     if (!currentQuestion) return
     const find = quiz.questions.findIndex(i => i.id === currentQuestion.id)
     if (quiz.questions[find-1] === undefined) return
+    const nFind = responses.findIndex(i => i.questionId === currentQuestion.id)
     setCurrentQuestion(quiz.questions[find-1])
 
 
@@ -84,6 +83,8 @@ export default function Asssessment() {
       newResponses[find].attempts +=1
       setResponses(newResponses)
     }
+
+    setCurrentQuestion({...currentQuestion, clicked: optionId})
   }
 
   
@@ -106,7 +107,7 @@ export default function Asssessment() {
                     className="absolute hidden options"
                     type="radio"
                     name={currentQuestion.id}
-                    checked={false}
+                    checked={responses.findIndex(i => i.questionId === currentQuestion.id && i.optionId === option.id) !== -1 ? true : false}
                     onChange={(e) => clickOption(e, currentQuestion.id, option.id)}
                   />
 
