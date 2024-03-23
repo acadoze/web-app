@@ -18,8 +18,7 @@ export default function Asssessment() {
 
   useEffect(() => {
     async function fetchQuiz() {
-      let authToken
-      authToken = localStorage.getItem("authToken") || ""
+      let authToken = localStorage.getItem("authToken") || ""
       const quizRes = await fetch(`${process.env["API_BASE"]}/quiz?topicId=${topicId}`, {
         headers: {
           Authorization: `Bearer ${authToken}`
@@ -45,8 +44,35 @@ export default function Asssessment() {
     }
   }, [quiz])
 
-  function submitQuiz(argument) {
-    // body...
+  function submitQuiz(e) {
+    e.preventDefault()
+    if (responses.length===0) {
+      toast.error("You have not started the quiz yet")
+      return
+    }
+    let authToken = localStorage.getItem("authToken") || ""
+    toast.warn(
+      "Are you sure you want to end this quiz?", {
+        onClose: async () => {
+          console.log(responses)
+          const sendResponse = await fetch(`${process.env["API_BASE"]}/quiz/${quiz.id}/submit`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authToken}`
+            },
+            method: "PUT",
+            body: JSON.stringify({responses})
+          })
+          const jsonRes = await sendResponse.json()
+          if (sendResponse.status === 200) {
+            toast.info("Your quiz has been submmited successfully")
+          } else {
+            toast.error(jsonRes.message)
+          }
+        } ,
+        closeButton: true
+      }
+    )
   }
 
   function setNextQ() {
@@ -91,7 +117,7 @@ export default function Asssessment() {
   return (
 
     !quiz ? <PlayerLoader /> 
-    : <div className="flex flex-col py-[15px] items-center w-[65%]">
+    : <><div className="flex flex-col py-[15px] items-center w-[65%]">
         <h2 className={"my-5 text-[#2f3a5c] font-[500] text-[1.6rem] text-center"}> {quiz.title} </h2>
         {/*<progress ref={questionProgressRef} className="" max="100" value={0} step="10"></progress>*/}
         {
@@ -133,10 +159,11 @@ export default function Asssessment() {
           </div>
 
         }
-          <button className="absolute bottom-[10px] bg-lightCyan px-5 py-2 rounded-md text-[white]"> SUBMIT </button>
+          <button className="absolute bottom-[10px] bg-darkCyan px-5 py-2 rounded-md text-[white]" onClick={submitQuiz}> SUBMIT </button>
 
     </div>
-      
+      <ToastContainer />
+      </>
     
   )
 }
