@@ -65,7 +65,7 @@ export default function Asssessment() {
           })
           const jsonRes = await sendResponse.json()
           if (sendResponse.status === 200) {
-            toast.info("Your quiz has been submmited successfully")
+            toast.info(jsonRes.message)
           } else {
             toast.error(jsonRes.message)
           }
