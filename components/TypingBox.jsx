@@ -33,6 +33,7 @@ export default function TypingBox() {
   }, [displayText])
 
   useEffect(() => {
+   
     return () => {
       pauseAudio()
     }
@@ -46,48 +47,29 @@ export default function TypingBox() {
     setRecording(false)
   }
 
-
   async function sttFromMic() {
     const tokenObj = await getTokenOrRefresh();
     const speechConfig = speechsdk.SpeechConfig.fromAuthorizationToken(tokenObj.authToken, tokenObj.region);
     speechConfig.speechRecognitionLanguage = 'en-US';
     
     const audioConfig = speechsdk.AudioConfig.fromDefaultMicrophoneInput();
-    recognizer.current = new speechsdk.SpeechRecognizer(speechConfig, audioConfig);
+    const recognizer = new speechsdk.SpeechRecognizer(speechConfig, audioConfig);
 
     setDisplayText("Speak into the microphone...");
 
     setRecording(true)
-    recognizer.current.startContinuousRecognitionAsync(() => {
-      console.log('Speech recognition started.');
-      setRecording(true)
-    });
-    recognizer.current.recognizing = (s, event) => {
-      console.log(s, e)
-      const result = event.result;
-
-      if (result.reason === speechsdk.ResultReason.RecognizingSpeech) {
-        const transcript = result.text;
-        console.log('Transcript: -->', transcript);
-        // Call a function to process the transcript as needed
-
-        setRecTranscript(transcript);
-      }
-    }
-
-    recognizer.current.recognized = (s, e) => {
-      const result = event.result;
-      console.log(s, e)
-
-      if (result.reason === speechsdk.ResultReason.RecognizingSpeech) {
-        const transcript = result.text;
-        console.log('Transcript: -->', transcript);
-        // Call a function to process the transcript as needed
-
-        setRecTranscript(transcript);
-      }
+    recognizer.recognizeOnceAsync(result => {
       setRecording(false)
-    }
+      console.log(result)
+      if (result.reason === ResultReason.RecognizedSpeech) {
+        setQuestion(text => {
+          text += ` ${result.text}`
+          return text
+        })
+      } else {
+        setDisplayText('Speech was cancelled or could not be recognized. Ensure your microphone is working properly.');
+      }
+    });
   }
 
 
