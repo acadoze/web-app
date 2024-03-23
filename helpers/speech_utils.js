@@ -15,7 +15,7 @@ export async function getTokenOrRefresh() {
             const jsonRes = await res.json()
             const token = jsonRes.token;
             const region = jsonRes.region;
-            cookie.set('speech-token', region + ':' + token, {maxAge: 540, path: '/'});
+            cookie.set('speech-token', region + ':' + token, {maxAge: 540000000, path: '/'});
 
             console.log('Token fetched from back-end: ' + token);
             return { authToken: token, region: region };

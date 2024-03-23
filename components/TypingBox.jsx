@@ -60,7 +60,6 @@ export default function TypingBox() {
     setRecording(true)
     recognizer.recognizeOnceAsync(result => {
       setRecording(false)
-      console.log(result)
       if (result.reason === ResultReason.RecognizedSpeech) {
         setQuestion(text => {
           text += ` ${result.text}`
