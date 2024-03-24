@@ -26,10 +26,10 @@ export default function Header({name}) {
           
         </div>
         <div>
-          <li className="flex items-center text-[white] text-[.8rem]">
+          <li className="flex items-center text-[white] text-[1rem]">
             {name} 
             <img src="Mask group.png" className=" h-[30px] w-[auto] " />
-            <span onClick={logout} className="" href="/" > Log out </span>
+            <span onClick={logout} className="cursor-pointer" href="/" > Log out </span>
           </li>
         </div>
       </div>
