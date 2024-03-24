@@ -27,7 +27,7 @@ export default function Asssessment() {
 
       const jsonRes = await quizRes.json()
 
-      if (quizRes.status === 200 || quizRes.status === 304) {
+      if (quizRes.statusText === 'OK') {
         setQuiz(jsonRes.quiz)
       } 
       if (quizRes.status === 401) {
