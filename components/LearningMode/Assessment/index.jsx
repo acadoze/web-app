@@ -27,7 +27,7 @@ export default function Asssessment() {
 
       const jsonRes = await quizRes.json()
 
-      if (quizRes.statusText === 'OK') {
+      if (quizRes.status === 200) {
         toast.info(jsonRes.message)
         setQuiz(jsonRes.quiz)
       } 
