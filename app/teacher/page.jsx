@@ -222,7 +222,7 @@ function ClassTab() {
                   {
                     ["student", "last active", "Egyptian Geography ", "king tut", "Hieroglyphics"]
                     .map((i, idx) => {
-                      return <th className="bg-[#AEECFF] font-[400] text-[#000] text-[.9rem] capitalize px-[40px] pb-[5px] pt-[15px]"> {i} </th> 
+                      return <th key={225} className="bg-[#AEECFF] font-[400] text-[#000] text-[.9rem] capitalize px-[40px] pb-[5px] pt-[15px]"> {i} </th> 
                     })
                   }
                 </tr>
@@ -443,7 +443,7 @@ function StudentTab() {
         { 
           [{name: "Alex"}].map((item, idx) => {
             return (
-              <button onClick={() => setCurrentStudentRecord(item)} className="relative flex flex-col items-center justify-center" key={idx} href={item.link}>
+              <button onClick={() => setCurrentStudentRecord(item)} className="relative flex flex-col items-center justify-center" key={idx} >
                 <img src={"/Mask group.png"} className="z-[1] h-[100px] w-[auto]" />
               </button>
             )
