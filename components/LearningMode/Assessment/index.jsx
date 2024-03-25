@@ -128,7 +128,7 @@ export default function Asssessment() {
         {/*<progress ref={questionProgressRef} className="" max="100" value={0} step="10"></progress>*/}
         {
           currentQuestion &&
-          <div className="flex flex-col justify-center py-[20px]">
+          <div className="flex flex-col justify-center py-[20px] w-[450px]">
             <p className="mb-[3rem] text-center">{currentQuestion.question}</p>
             {
               currentQuestion.options.map(option => {
