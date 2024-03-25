@@ -150,7 +150,7 @@ body {
   background-color: #c6f3ff;
 }
 
-.t_classes > a {
+.t_classes > button {
   height: 100px;
   width: 100px;
   border: 1px solid #c6f3ff;
@@ -158,4 +158,18 @@ body {
 }
 input.options:checked ~ label {
   background-color: #52d6ff;
+}
+
+.s_table td {
+  padding: 10px;
+}
+
+.s_right {
+  position: absolute;
+  left: 230px;
+  color: #bfbfbf;
+  font-weight: 200;
+  width: 250px;
+  display: block;
+  text-align: left;
 }

@@ -47,8 +47,8 @@ export default function Home() {
 
         <section className="flex text-[white] x_spacing justify-center">
           <div className={` ${outfit.className}`}>
-            <h2 className="text-[1.8rem] capitalise spacing-[10px] font-[600]">No More<br /> Boring<br /> Classroom!</h2>
-            <p className="mb-[30px]">Open the door and lets discover!</p>
+            <h2 className="text-[1.8rem] capitalise spacing-[10px] font-[600]">Adventure awaits! </h2>
+            <p className="mb-[30px]">Explore, learn, and have fun!</p>
             <div>
               <Link href="auth" className="uppercase py-2 px-3 bg-[#659bd5] rounded-2xl mr-3">start your free trial</Link>
               <Link href="auth" className="uppercase py-2 px-3 border-2 border-[#0888d7] rounded-2xl">log in</Link>
@@ -62,15 +62,15 @@ export default function Home() {
         <section className="x_spacing relative flex flex-col items-center">
             <div className="bg-lightCyan rounded-[50px] z-[1] top-[141px] h-[200px] left-[0] absolute w-[inherit] shadow-2xl mb-[35px]"></div>
 
-            <div className={`${orbitron.className} z-[3] flex bg-gradient-to-r from-[#fff4fe] to-[#f4fcff] px-[1.6rem] py-[3rem] bg-[white] rounded-[50px] h-[260px] relative mb-5 w-[630px] shadow-2xl`}>
+            <div className={`${orbitron.className} z-[3] flex bg-gradient-to-r from-[#fff4fe] to-[#f4fcff] pl-[6rem] pr-[3rem] py-[3rem] bg-[white] rounded-[50px] h-[260px] relative mb-5 w-[90%] shadow-2xl`}>
 
               <div className="w-[180px]">
 
-                <h1 className="tracking-[1px] uppercase text-[1.7rem] font-[900]"> history <span className={`block text-[1.1rem] font-[600] ${poppins.className} `}>the potential</span> </h1>
-                <p className={`${poppins.className} text-[.8rem]`}> Discover a new world of unexpected gaming and entertainment experience</p>
+                <h1 className="tracking-[1px] uppercase text-[1.7rem] font-[900]"> history  </h1>
+                <p className={`${poppins.className} text-[.8rem]`}>Journey through the corridors of time, exploring the captivating tales of history, where each lesson brings the past to life and fuels your thirst for knowledge!</p>
               </div>
               
-              <div className="flex flex-col absolute left-[210px] w-[400px] top-0">
+              <div className="flex flex-col absolute right-[100px] w-[400px] top-0">
                 <img src="/14.png" className="absolute h-[200px] top-[57px] left-[28px] w-[auto] z-[5]" />
                 <img src="/Sphynx.png" className="absolute left-[84px] z-[2] h-[170px] top-[62px] w-[auto]" />
                 <img src="/43.png" className="absolute top-[113px] left-[210px] h-[136px] z-[5] w-[auto]" />
@@ -82,7 +82,7 @@ export default function Home() {
               </div>
 
             </div>
-            <div className={`${orbitron.className} relative z-[3] flex bg-gradient-to-r from-[#fff4fe] to-[#f4fcff] px-[1.6rem] py-[3rem] bg-[white] rounded-[50px] h-[260px] w-[630px] shadow-2xl`}>
+            <div className={`${orbitron.className} relative z-[3] flex bg-gradient-to-r from-[#fff4fe] to-[#f4fcff] pl-[6rem] pr-[8rem] py-[3rem] bg-[white] justify-between rounded-[50px] h-[260px] w-[90%] shadow-2xl`}>
               
               <div className="flex flex-col relative w-[400px] top-0">
                 <img src="/engineer.png" className="absolute h-[235px] top-[-24px] left-[0] z-[1] w-[auto] z-[5]" />
@@ -92,8 +92,8 @@ export default function Home() {
 
               <div className="w-[180px]">
 
-                <h1 className="tracking-[1px] uppercase text-[1.7rem] font-[900]"> science <span className={`block text-[1.1rem] font-[600] ${poppins.className} `}>the potential</span> </h1>
-                <p className={`${poppins.className} text-[.8rem]`}> Discover a new world of unexpected gaming and entertainment experience</p>
+                <h1 className="tracking-[1px] uppercase text-[1.7rem] font-[900]"> science   </h1>
+                <p className={`${poppins.className} text-[.8rem]`}> Embark on an adventure through the vast world of science, where each lesson unveils new wonders and sparks curiosity!</p>
               </div>
 
             </div>

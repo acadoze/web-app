@@ -14,6 +14,27 @@ export const useTeacherPage = create((set, get) => ({
   resources: null,
   students: null,
   classRooms: null,
+  showSubBanner: false,
+  activeClassRoom: null,
+  currentStudentRecord: null,
+
+  setSubBanner: val => {
+    set({
+      showSubHeader: val
+    })
+  },
+
+  setCurrentStudentRecord: val => {
+    set({
+      currentStudentRecord: val
+    })
+  },
+
+  setActiveClassRoom: obj => {
+    set({
+      activeClassRoom: obj
+    })
+  },
 
   setProfile: (profile) => {
     set({
