@@ -10,16 +10,28 @@ const poppins = Poppins({ subsets: ["latin"], weight: ["200", "400", "500", "600
 import PlayerLoader from "@/components/PlayerLoader"
 const outfit = Outfit({ subsets: ["latin"] });
 import { useRouter  } from 'next/navigation'
-import {useStore} from "@/hooks/useStore"
+import {useTeacherPage} from "@/hooks/useStore"
 import axios from "axios"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function Home() {
-  const [classRooms, setClassRooms] = useState([])
   const [pageLoader, setPageLoader] = useState(true)
   const router = useRouter()
-  const [profile, setProfile] = useState(false)
+
+  const [currentTab, setCurrentTab] = useState("classes")
+
+  const students = useTeacherPage(state => state.students)
+  const setStudents = useTeacherPage(state => state.setStudents)
+
+  const profile = useTeacherPage(state => state.profile)
+  const setProfile = useTeacherPage(state => state.setProfile)
+
+  const resources = useTeacherPage(state => state.resources)
+  const setResources = useTeacherPage(state => state.setResources)
+
+  const classRooms = useTeacherPage(state => state.classRooms)
+  const setClassRooms = useTeacherPage(state => state.setClassRooms)
   
   useEffect(() => {
     let authToken = localStorage.getItem("authToken") || ""
@@ -89,33 +101,22 @@ export default function Home() {
 
           </div>
 
-          <div className="bg-electricPurple rounded-[50px] relative top-[156px] z-[1] h-[230px] w-[90%] shadow-2xl "></div>
-        </div>
-
-
-        <div className="flex flex-col items-center text-[white] x_spacing py-[4rem]">
-          <h2 className={` ${outfit.className} font-[500] mb-[30px] uppercase text-[2rem] `}> 
-            Your classes
-          </h2>
-          <div className="t_classes flex justify-start gap-x-[5px]">
-            { classRooms.length > 0 &&
-              classRooms.map(item => {
-                return (
-                  <Link className="relative flex flex-col items-center justify-center" key={item.id} href={item.link}>
-                    <img src={item.img} className="z-[1]" />
-                    <h3 className="absolute top-[60px] z-[3] text-[1.8rem] font-[500]"> {item.title} </h3>
-                  </Link>
-                )
+          <div className="bg-electricPurple rounded-[50px] flex items-end  justify-center relative top-[156px] z-[1] h-[230px] w-[90%] shadow-2xl ">
+            <div className="absolute bottom-[-18px] flex gap-x-[10px]">{
+              ["classes", "students", "resources"].map((i, idx) => {
+                return <button className={`p-[5px] text-[.88rem] border-solid border-lightCyan rounded-[40px] w-[100px] capitalize ${currentTab === i ? "active_l" : "bg-[white]"}  `} key={idx}>{i} </button>
               })
-            }
-            <Link className="relative flex flex-col bg-[white] items-center justify-center" href={'/'}>
-              <img src={"/Plus_perspective_matte.png"} className="z-[1] h-[90px] w-[100px]" />
-              <h3 className={`${orbitron.className} absolute top-[105px] z-[3] text-[1rem] font-[500]`}> 
-                ADD A CLASS
-              </h3>
-            </Link>
+            }</div>
           </div>
         </div>
+
+        {
+          currentTab === "classes" ? <ClassTab classRooms={classRooms} />
+          : currentTab === "students" ? <StudentTab students={students} />
+          : <ResourceTab resources={resources} />
+        }
+
+        
 
         <div className={`flex ${outfit.className} px-5 justify-center px-[2.5rem]  text-[white] x_spacing  mt-[5rem]`}>
           <div className="relative py-[2rem] px-[4rem] h-[200px] rounded-[30px] bg-[#659bd5]  w-[70%]">
@@ -141,3 +142,41 @@ export default function Home() {
   );
 }
 
+function ClassTab({classRooms}) {
+  return (
+    <div className="flex flex-col items-center text-[white] x_spacing py-[4rem]">
+      <h2 className={` ${outfit.className} font-[500] mb-[30px] uppercase text-[2rem] `}> 
+        Your classes
+      </h2>
+      <div className="t_classes flex justify-start gap-x-[5px]">
+        { classRooms.length > 0 &&
+          classRooms.map(item => {
+            return (
+              <Link className="relative flex flex-col items-center justify-center" key={item.id} href={item.link}>
+                <img src={item.img} className="z-[1]" />
+                <h3 className="absolute top-[60px] z-[3] text-[1.8rem] font-[500]"> {item.title} </h3>
+              </Link>
+            )
+          })
+        }
+        <Link className="relative flex flex-col bg-[white] items-center justify-center" href={'/'}>
+          <img src={"/Plus_perspective_matte.png"} className="z-[1] h-[90px] w-[100px]" />
+          <h3 className={`${orbitron.className} absolute top-[105px] z-[3] text-[1rem] font-[500]`}> 
+            ADD A CLASS
+          </h3>
+        </Link>
+      </div>
+    </div>
+  )
+}
+
+function ResourceTab(argument) {
+  return (
+    <></>
+  )
+}
+function StudentTab(argument) {
+  return (
+    <></>
+  )
+}

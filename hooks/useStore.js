@@ -9,6 +9,34 @@ import {v4 as uuid} from "uuid"
   }
 */
 
+export const useTeacherPage = create((set, get) => ({
+  profile: null,
+  resources: null,
+  students: null,
+  classRooms: null,
+
+  setProfile: (profile) => {
+    set({
+      profile
+    })
+  },
+  setStudents: (list) => {
+    set({
+      students: list
+    })
+  },
+  setClassRooms: (list) => {
+    set({
+      classRooms: list
+    })
+  },
+  setResources: (list) => {
+    set({
+      resources: list
+    })
+  }
+}))
+
 export const useStore = create((set, get) => ({
   topicId: "",
   assignedTopics: [],
