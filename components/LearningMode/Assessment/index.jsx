@@ -14,7 +14,9 @@ export default function Asssessment() {
   const questionProgressRef = useRef(null)
   const router = useRouter()
   const [currentQuestion, setCurrentQuestion] = useState(false)
+  const [showWarning, setWarning] = useState(false)
   const [responses, setResponses] = useState([])
+  const fetchController = useRef(null)
 
   useEffect(() => {
     async function fetchQuiz() {
@@ -45,35 +47,38 @@ export default function Asssessment() {
     }
   }, [quiz])
 
-  function submitQuiz(e) {
-    e.preventDefault()
+  async function submitQuiz() {
     if (responses.length===0) {
       toast.error("You have not started the quiz yet")
       return
     }
-    let authToken = localStorage.getItem("authToken") || ""
-    toast.warn(
-      "Are you sure you want to end this quiz?", {
+    toast.info(
+      "This quiz is being submitted. You can halt this submission by clicking the close button", {
         onClose: async () => {
-          console.log(responses)
-          const sendResponse = await fetch(`${process.env["API_BASE"]}/quiz/${quiz.id}/submit`, {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${authToken}`
-            },
-            method: "PUT",
-            body: JSON.stringify({responses})
-          })
-          const jsonRes = await sendResponse.json()
-          if (sendResponse.status === 200) {
-            toast.info(jsonRes.message)
-          } else {
-            toast.error(jsonRes.message)
-          }
+          if (fetchController) fetchController.current.abort()
         } ,
         closeButton: true
       }
     )
+    let authToken = localStorage.getItem("authToken") || ""
+    fetchController.current = new AbortController()
+    const sendResponse = await fetch(`${process.env["API_BASE"]}/quiz/${quiz.id}/submit`, {
+      signal: fetchController.current.signal,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${authToken}`
+      },
+      method: "PUT",
+      body: JSON.stringify({responses})
+    })
+
+    const jsonRes = await sendResponse.json()
+    if (sendResponse.status === 200) {
+      toast.info(jsonRes.message)
+    } else {
+      toast.error(jsonRes.message)
+    }
+    
   }
 
   function setNextQ() {
@@ -160,7 +165,24 @@ export default function Asssessment() {
           </div>
 
         }
-          <button className="absolute bottom-[10px] bg-darkCyan px-5 py-2 rounded-md text-[white]" onClick={submitQuiz}> SUBMIT </button>
+          <button 
+            className="absolute bottom-[10px] bg-darkCyan px-5 py-2 rounded-md text-[white]" 
+            onClick={() => setWarning(true)}
+          > 
+            SUBMIT 
+            
+           
+          </button>
+          {
+            showWarning &&
+             <div className="absolute shadow-2xl px-4 py-5 z-[50] bg-[white] rounded-md w-[300px] bottom-[30px] flex flex-col right-[125px]">
+                <p className="mb-3"> Are you sure you want to end the Asssessment? You cannot retake this quz after submission </p>
+                <div className="flex">
+                  <span className="px-4 cursor-pointer bg-[#00c2ff] mr-5 rounded-md text-[white] block py-2" onClick={() => setWarning(false)}> Cancel </span>
+                  <span className="px-4 cursor-pointer bg-[#52d6ff] rounded-md text-[white] block py-2" onClick={() => submitQuiz()}> Submit </span>
+                </div>
+              </div>
+          }
 
     </div>
       <ToastContainer />
