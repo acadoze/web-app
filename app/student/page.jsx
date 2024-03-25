@@ -50,7 +50,7 @@ export default function Home() {
           {/*<div className="bg-lightCyan rounded-[50px] h-[280px] shadow-2xl mb-[35px]"></div>*/}
           <img src="/top.png" className="z-[1] w-full absolute" />
 
-          <div className={`${orbitron.className} z-[3] flex bg-gradient-to-r from-[#fff4fe] to-[#f4fcff] px-[1.6rem] py-[3rem] bg-[white] rounded-[50px] h-[260px] relative top-[200px] w-[85%] top-[230px] shadow-2xl `}>
+          <div className={`${orbitron.className} z-[3] flex bg-gradient-to-r from-[#fff4fe] to-[#f4fcff] px-[1.6rem] py-[3rem] bg-[white] rounded-[50px] h-[260px] relative top-[200px] w-[85%] top-[300px] shadow-2xl `}>
 
             <div className="w-[180px]">
 
@@ -58,7 +58,7 @@ export default function Home() {
               <p className={`${poppins.className} text-[.75rem]`}> Discover a new world of unexpected gaming and entertainment experience</p>
             </div>
             
-            <div className="flex flex-col relative left-[45px] top-[-10px]">
+            <div className="flex flex-col relative left-[67px] top-[-10px]">
               <img src="/duo/br-circle.png" className="w-[300px] h-[300px] relative bottom-[80px]" />
                <img src="Mask group.png" className="absolute left-[30px] h-[250px] w-[auto] top-[-32px]" />
             </div>
