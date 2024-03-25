@@ -465,7 +465,7 @@ function StudentRecord() {
       <div className="flex text-[.9rem] flex-col items-center w-[400px] mx-[auto]">
         <div className="flex items-center mb-[2rem]">
           <img className="w-[auto] h-[80px]" src="/Mask group.png" />
-          <h2 className="font-[500] text-[1.3rem] text-[white]"> ALEX'S<br /> PROFILE </h2>
+          <h2 className="font-[500] text-[1.3rem] text-[white]"> ALEX&apos;S<br /> PROFILE </h2>
         </div>
 
         <div className="w-full mb-[1.7rem] relative mb-[35px]">
