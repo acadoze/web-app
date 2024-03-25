@@ -149,7 +149,7 @@ export default function Asssessment() {
 
               })
             }
-            <div className="flex justify-center gap-x-[10px] mt-5 text-[1.5rem]">
+            <div className="flex justify-center absolute bottom-[37px] left-[200px] gap-x-[30px] mt-5 text-[1.5rem]">
               <GrPrevious className={`cursor-pointer mr-[30px`} onClick={() => {
                 setPrevQ()
               }} />
