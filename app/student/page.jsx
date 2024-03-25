@@ -46,28 +46,26 @@ export default function Home() {
     <main className="">
       <StudentHeader name={studentName} />
       <section className="bg-blue pb-[3rem] ">
-        <div className="flex flex-col items-center x_spacing h-[625px] w-[780px] mx-[auto]">
-          <div className=" relative h-[700px] w-[inherit]">
-            {/*<div className="bg-lightCyan rounded-[50px] h-[280px] shadow-2xl mb-[35px]"></div>*/}
-            <img src="/top.png" className="z-[1]" />
+        <div className=" relative h-[700px] x_spacing w-[inherit] items-center flex flex-col">
+          {/*<div className="bg-lightCyan rounded-[50px] h-[280px] shadow-2xl mb-[35px]"></div>*/}
+          <img src="/top.png" className="z-[1] w-full absolute" />
 
-            <div className={`${orbitron.className} z-[3] flex bg-gradient-to-r from-[#fff4fe] to-[#f4fcff] px-[1.6rem] py-[3rem] bg-[white] rounded-[50px] h-[260px] left-[10%] top-[220px] w-[630px] shadow-2xl absolute`}>
+          <div className={`${orbitron.className} z-[3] flex bg-gradient-to-r from-[#fff4fe] to-[#f4fcff] px-[1.6rem] py-[3rem] bg-[white] rounded-[50px] h-[260px] relative top-[200px] w-[85%] top-[230px] shadow-2xl `}>
 
-              <div className="w-[180px]">
+            <div className="w-[180px]">
 
-                <h1 className="tracking-[1px] uppercase text-[1.3rem] font-[900] mb-4"> welcome <span className={`block text-[.8rem] font-[600] ${poppins.className} `}>alex</span> </h1>
-                <p className={`${poppins.className} text-[.75rem]`}> Discover a new world of unexpected gaming and entertainment experience</p>
-              </div>
-              
-              <div className="flex flex-col absolute left-[185px] top-[35px]">
-                <img src="/duo/br-circle.png" className="w-[250px] h-[250px] relative bottom-[80px]" />
-                 <img src="Mask group.png" className="absolute left-[30px] h-[200px] w-[auto] top-[-32px]" />
-              </div>
-
+              <h1 className="tracking-[1px] uppercase text-[1.3rem] font-[900] mb-4"> welcome <span className={`block text-[.8rem] font-[600] ${poppins.className} `}>alex</span> </h1>
+              <p className={`${poppins.className} text-[.75rem]`}> Discover a new world of unexpected gaming and entertainment experience</p>
+            </div>
+            
+            <div className="flex flex-col relative left-[45px] top-[-10px]">
+              <img src="/duo/br-circle.png" className="w-[300px] h-[300px] relative bottom-[80px]" />
+               <img src="Mask group.png" className="absolute left-[30px] h-[250px] w-[auto] top-[-32px]" />
             </div>
 
-            <div className="bg-electricPurple rounded-[50px] relative top-[-134px] z-[1] h-[230px] w-[780px] shadow-2xl "></div>
           </div>
+
+          <div className="bg-electricPurple rounded-[50px] relative top-[156px] z-[1] h-[230px] w-[90%] shadow-2xl "></div>
         </div>
 
         <div className="flex flex-col  text-[white] x_spacing ">

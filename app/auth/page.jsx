@@ -31,6 +31,7 @@ function Auth({hidePopup, role}) {
     .then(async (response) => {
       let jsonRes = await response.json()
       if (response.status === 200) {
+        toast.info(jsonRes.message)
         router.push('/' + role)
         localStorage.setItem("authToken", jsonRes.data.authToken)
       } else {
