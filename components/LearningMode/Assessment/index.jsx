@@ -28,6 +28,7 @@ export default function Asssessment() {
       const jsonRes = await quizRes.json()
 
       if (quizRes.statusText === 'OK') {
+        toast.info(jsonRes.message)
         setQuiz(jsonRes.quiz)
       } 
       if (quizRes.status === 401) {
