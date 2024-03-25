@@ -92,7 +92,7 @@ export default function Home() {
             <div className="bg-electricPurple rounded-[50px] flex items-end  justify-center relative top-[156px] z-[1] h-[230px] w-[90%] shadow-2xl ">
               <div className="absolute bottom-[-18px] flex gap-x-[10px]">{
                 ["classes", "students", "resources"].map((i, idx) => {
-                  return <button onClick={() => setCurrentTab(i)} className={`p-[5px] text-[.88rem] border-solid border-lightCyan rounded-[40px] w-[100px] capitalize ${currentTab === i ? "active_l" : "bg-[white]"}  `} key={idx}>{i} </button>
+                  return <button onClick={() => setCurrentTab(i)} className={`p-[5px] text-[.88rem] border-solid border-lightCyan rounded-[40px] w-[100px] h-[50px] capitalize ${currentTab === i ? "active_l" : "bg-[white]"}  `} key={idx}>{i} </button>
                 })
               }</div>
             </div>
