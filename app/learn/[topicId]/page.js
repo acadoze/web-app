@@ -20,7 +20,7 @@ export default function Home() {
 
   useEffect(() => {
     setTopicId(topicId)
-  }, [])
+  }, [topicId])
 
 
   return (
