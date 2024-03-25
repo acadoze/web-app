@@ -15,13 +15,13 @@ export default function Home() {
   return (
     <main>
       <Header />
-      <section className="bg-blue py-[2rem]">
-        <div className="flex flex-col items-center w-[780px] mx-[auto]">
-          <div className=" relative h-[700px] w-[inherit]">
+      <section className="bg-blue py-[5rem]">
+        <div className="flex flex-col items-center x_spacing mx-[auto]">
+          <div className=" relative h-[700px] w-full flex flex-col justify-center items-center" >
             {/*<div className="bg-lightCyan rounded-[50px] h-[280px] shadow-2xl mb-[35px]"></div>*/}
-            <img src="/top.png" className="z-[1]" />
+            <img src="/top.png" className="z-[1] w-full" />
 
-            <div className={`${orbitron.className} z-[3] flex bg-gradient-to-r from-[#fff4fe] to-[#f4fcff] px-[1.6rem] py-[3rem] bg-[white] rounded-[50px] h-[260px] left-[10%] top-[220px] w-[630px] shadow-2xl absolute`}>
+            <div className={`${orbitron.className} z-[3] flex  gap-x-[85px] bg-gradient-to-r from-[#fff4fe] to-[#f4fcff] px-[1.6rem] py-[3rem] bg-[white] rounded-[50px] h-[260px] relative bottom-[320px] w-[85%] shadow-2xl `}>
 
               <div className="w-[180px]">
 
@@ -30,8 +30,8 @@ export default function Home() {
                 <p className={`${poppins.className} text-[.75rem]`}> Discover a new world of unexpected gaming and entertainment experience</p>
               </div>
               
-              <div className="flex flex-col absolute left-[185px] top-[35px]">
-                <img src="/duo/br-circle.png" className="w-[250px] h-[250px] relative bottom-[80px]" />
+              <div className="flex flex-col relative bottom-[14px] right-[5px]">
+                <img src="/duo/br-circle.png" className="w-[280px] h-[280px] relative bottom-[107px]" />
                 <div className="flex absolute w-[300px]">
                   <img src="/duo/girl.png" className="h-[235px] w-[auto] absolute top-[-10px] left-[21px]" />
                   <img src="/duo/machine.png" className="h-[120px] w-[auto] left-[104px] top-[-28px] absolute"/>
@@ -41,7 +41,7 @@ export default function Home() {
 
             </div>
 
-            <div className="bg-electricPurple rounded-[50px] relative top-[-134px] z-[1] h-[220px] w-[750px] shadow-2xl "></div>
+            <div className="bg-electricPurple rounded-[50px] absolute bottom-[150px] h-[230px] w-[90%] z-[1] shadow-2xl "></div>
           </div>
         </div>
 
