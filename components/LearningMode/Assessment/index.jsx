@@ -31,8 +31,10 @@ export default function Asssessment() {
 
       if (quizRes.status === 200) {
         toast.info(jsonRes.message)
-        setQuiz(jsonRes.quiz)
-      } 
+        if (jsonRes.quiz.length > 0) {
+          setQuiz(jsonRes.quiz)
+        }
+      }
       if (quizRes.status === 401) {
         toast.error("Please log in to continue")
         router.push('/auth')
